@@ -42,12 +42,17 @@ def intro():
 
     ready_game = input("Are you ready?")
     print(f"You have said {ready_game}")
-    view_players()
+    display_players()
 
-def view_players():
+def display_players():
     """
     Display 5 random players for player to choose from
     """
-    
+    first_player, second_player, third_player, fourth_player, fifth_player = random.sample({p1.name, p2.name, p3.name, p4.name, p5.name, p6.name, p7.name, p8.name, p9.name, p10.name}, 5)
+    print(f"Player 1: {first_player}")
+    print(f"Player 2: {second_player}")
+    print(f"Player 3: {third_player}")
+    print(f"Player 4: {fourth_player}")
+    print(f"Player 5: {fifth_player}")
 
 intro()
