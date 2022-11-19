@@ -196,6 +196,10 @@ def match_start():
     else:
         sys.exit("You don't want to kick off? That makes me sad :( ")
 
+def kick_off():
+    scene_num = [sorted(random.sample(range(1, 90), 5))]
+    print(scene_num)
+
 
 intro()
 
