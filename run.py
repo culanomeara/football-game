@@ -131,7 +131,7 @@ def validate_str(query, str1, str2):
     valid1 = str1
     valid2 = str2
     while True:
-        answer = input(query)
+        answer = input(query).lower()
         if answer == valid1:
             return answer
         elif answer == valid2:
@@ -154,19 +154,24 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     opp_team.skill = random.randint(80, 100)
     opp_team.injury = random.randint(3, 10)
     opp_team.form = random.randint(3, 10)
-    
-    print(f"""Team Stats for {current_team.name}: Defence(Max 100):
-     {current_team.defence}, Attack(Max 100): {current_team.attack},
-      Stamina(Max 100): {current_team.stamina}, \n Skill(Max 100):
-       {current_team.skill}, Injury Proneness(Max 10): {current_team.injury},
-        Curent Form(Max 10): {current_team.form}""")
 
     print(f"""
-    \nTeam Stats for {opp_team.name}: Defence(Max 100): {opp_team.defence},
-     Attack(Max 100): {opp_team.attack}, Stamina(Max 100): {opp_team.stamina},
-     \n Skill(Max 100): {opp_team.skill}, Injury Proneness(Max 10): {opp_team.injury},
-     Curent Form(Max 10): {opp_team.form}
-     """)
+    TEAM STATS FOR {current_team.name.upper()}:
+    Defence(Max 100): {current_team.defence}
+    Attack(Max 100): {current_team.attack}
+    Stamina(Max 100): {current_team.stamina}
+    Skill(Max 100): {current_team.skill}
+    Injury Proneness(Max 10): {current_team.injury}
+    Curent Form(Max 10): {current_team.form}""")
+
+    print(f"""
+    TEAM STATS FOR {opp_team.name.upper()}:
+    Defence(Max 100): {opp_team.defence},
+    Attack(Max 100): {opp_team.attack}
+    Stamina(Max 100): {opp_team.stamina}
+    Skill(Max 100): {opp_team.skill}
+    Injury Proneness(Max 10): {opp_team.injury}
+    Curent Form(Max 10): {opp_team.form}""")
 
 intro()
 
