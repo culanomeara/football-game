@@ -44,7 +44,9 @@ def intro():
     The outcome depends on your team attributes \n
     """)
 
-    ready_game = validate_str("Are you ready? ", "y", "n")
+    ready_game = validate_str(
+        "Ok to continue? (y=Yes, n=No, x=Exit) ", "y", "n", "x"
+        )
     if ready_game == 'y':
         start_game()
     else:
@@ -54,6 +56,7 @@ def intro():
 def start_game():
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
+    match_start()
 
 
 def display_teams():
@@ -128,18 +131,22 @@ def validate_int(int1, int2):
             return user_choice
 
 
-def validate_str(query, str1, str2):
+def validate_str(query, str1, str2, str3):
 
     valid1 = str1
     valid2 = str2
+    valid3 = str3
+
     while True:
         answer = input(query).lower()
         if answer == valid1:
             return answer
         elif answer == valid2:
             return answer
+        elif answer == valid3:
+            return answer
         else:
-            print(f"You have to choose {str1} or {str2}")
+            print(f"You have to choose {str1}, {str2} or {str3}")
 
 def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     current_team = GAME_TEAM
@@ -174,6 +181,21 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     Skill(Max 100): {opp_team.skill}
     Injury Proneness(Max 10): {opp_team.injury}
     Curent Form(Max 10): {opp_team.form}""")
+
+
+def match_start():
+    start_choice = validate_str("Kick off?"
+                                " y=Kick Off,"
+                                " n=restart game,"
+                                " x=Exit", "y", "n", "x")
+    if start_choice == 'y':
+        kick_off()
+    elif start_choice == 'n':
+        print("We're just going to restart the game so...")
+        intro()
+    else:
+        sys.exit("You don't want to kick off? That makes me sad :( ")
+
 
 intro()
 
