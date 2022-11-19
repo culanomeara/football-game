@@ -2,96 +2,96 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
-import sys
-import os
 import random
-import time
 
-players = []
-game_player = ""
+teams = []
+game_team = ""
 
-class Player:
-    def __init__(self, name, defence, attack, stamina, skill, injury, luck):
+class Team:
+    def __init__(self, name, defence, attack, stamina, skill, injury, form):
         self.name = name
         self.defence = defence
         self.attack = attack
         self.stamina = stamina
         self.skill = skill
         self.injury = injury
-        self.luck = luck
+        self.form = form
 
 
-p1 = Player("Mbappe", 0, 0, 0, 0, 0, 0)
-p2 = Player("Messi", 0, 0, 0, 0, 0, 0)
-p3 = Player("Ronaldo", 0, 0, 0, 0, 0, 0)
-p4 = Player("Salah", 0, 0, 0, 0, 0, 0)
-p5 = Player("Haaland", 0, 0, 0, 0, 0, 0)
-p6 = Player("Mane", 0, 0, 0, 0, 0, 0)
-p6 = Player("Benzema", 0, 0, 0, 0, 0, 0)
-p7 = Player("Lewandowski", 0, 0, 0, 0, 0, 0)
-p8 = Player("Neymar", 0, 0, 0, 0, 0, 0)
-p9 = Player("Obafemi", 0, 0, 0, 0, 0, 0)
-p10 = Player("Kerr", 0, 0, 0, 0, 0, 0)
+t1 = Team("Liverpool", 0, 0, 0, 0, 0, 0)
+t2 = Team("PSG", 0, 0, 0, 0, 0, 0)
+t3 = Team("Man City", 0, 0, 0, 0, 0, 0)
+t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0)
+t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0)
+t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0)
+t7 = Team("Juventus", 0, 0, 0, 0, 0, 0)
+t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0)
+t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0)
+t10 = Team("Benfica", 0, 0, 0, 0, 0, 0)
+
 
 
 def intro():
     """
-    Tell the player what the game is about.
+    Tell the team what the game is about.
     """
     print("                     Welcome to Football Stars                   ")
     print("         The game that puts you 90 minutes away from glory       ")
-    print("You select your player. The player has randomly assigned attributes")
+    print("You select your team. The team has randomly assigned attributes")
     print("     Start the match and choose actions as the game plays out")
-    print("         The outcome depends on your player attributes")
+    print("         The outcome depends on your team attributes")
 
-    ready_game = input("Are you ready?")
-    display_players()
+    ready_game = validate_str(input("Are you ready?"), "y", "n")
+    display_teams()
     
 
 
-def display_players():
+def display_teams():
     """
-    Display 5 random players for user to choose from
+    Display 5 random teams for user to choose from
     """
     
 
     (
-        first_player,
-        second_player,
-        third_player,
-        fourth_player,
-        fifth_player,
+        first_team,
+        second_team,
+        third_team,
+        fourth_team,
+        fifth_team,
     ) = random.sample(
         {
-            p1.name,
-            p2.name,
-            p3.name,
-            p4.name,
-            p5.name,
-            p6.name,
-            p7.name,
-            p8.name,
-            p9.name,
-            p10.name,
+            t1,
+            t2,
+            t3,
+            t4,
+            t5,
+            t6,
+            t7,
+            t8,
+            t9,
+            t10,
         },
         5,
     )
 
-    players = [first_player, second_player, third_player, fourth_player, fifth_player]
-    print(f"Player 1: {first_player}")
-    print(f"Player 2: {second_player}")
-    print(f"Player 3: {third_player}")
-    print(f"Player 4: {fourth_player}")
-    print(f"Player 5: {fifth_player}")
+    teams = [first_team, second_team, third_team, fourth_team, fifth_team]
+    print(f"Team 1: {first_team.name}")
+    print(f"Team 2: {second_team.name}")
+    print(f"team 3: {third_team.name}")
+    print(f"team 4: {fourth_team.name}")
+    print(f"team 5: {fifth_team.name}")
     
-    game_player_num = validate_input(1, 5)
-    global game_player
-    game_player = players[game_player_num - 1]
-    print(f"You have chosen {game_player}")
-    print("The player stats are " )
+    game_team_num = validate_int(1, 5)
+    global game_team
+    game_team = teams[game_team_num - 1]
+   
+    print(f"You have chosen {game_team.name}")
+    """print(f"His current form is {form}")
+     generate_stats()
+    print("The team stats are: Defence {} " )"""
 
 
-def validate_input(int1, int2):
+def validate_int(int1, int2):
     """
     Validates input and gives error message if invalid
     """
@@ -108,7 +108,21 @@ def validate_input(int1, int2):
             print(f"Please enter a number between {low} and {high}")
         else:
             return user_choice
-        
+def validate_str(user, str1, str2)   
+    user_input = user
+    valid1=str1
+    valid2=str2
+    while True:
+        if user_input = 'y':
+            print("You pick up the slab and begin reading.")
+            break
+        elif pick == 'no':
+            print("You walk forwards and land facefirst onto the slab.")
+            break
+        else:
+            print("You have to choose Yes or No")
+
         
 
 intro()
+
