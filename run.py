@@ -41,8 +41,15 @@ def intro():
     print("     Start the match and choose actions as the game plays out")
     print("         The outcome depends on your team attributes")
 
-    ready_game = validate_str(input("Are you ready?"), "y", "n")
+    ready_game = validate_str("Are you ready?", "y", "n")
+    if ready_game == 'y':
+        start_game()
+    else:
+        print("You want to just chill here?")
+    
+def start_game():
     display_teams()
+    generate_stats(game_team)
     
 
 
@@ -108,21 +115,30 @@ def validate_int(int1, int2):
             print(f"Please enter a number between {low} and {high}")
         else:
             return user_choice
-def validate_str(user, str1, str2)   
-    user_input = user
-    valid1=str1
-    valid2=str2
-    while True:
-        if user_input = 'y':
-            print("You pick up the slab and begin reading.")
-            break
-        elif pick == 'no':
-            print("You walk forwards and land facefirst onto the slab.")
-            break
-        else:
-            print("You have to choose Yes or No")
 
-        
+
+def validate_str(query, str1, str2):
+
+    valid1 = str1
+    valid2 = str2
+    while True:
+        answer = input(query)
+        if answer == valid1:
+            return answer
+        elif answer == valid2:
+            return answer
+        else:
+            print("You have to choose y or n")
+
+def generate_stats(game_team):
+    current_team = game_team
+    current_team.defence = random.randint(75, 90)
+    current_team.attack = random.randint(80,95)
+    current_team.stamina = random.randint(80,95)
+    current_team.skill = random.randint(80,95)
+    current_team.injury = random.randint(1,10)
+    current_team.form = random.randint(1,10)
+    print(current_team.defence, current_team.attack, current_team.stamina)
 
 intro()
 
