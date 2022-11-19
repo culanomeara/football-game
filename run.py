@@ -3,6 +3,7 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 import random
+import sys
 
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
@@ -35,17 +36,19 @@ def intro():
     """
     Tell the team what the game is about.
     """
-    print("                     Welcome to Football Stars                   ")
-    print("         The game that puts you 90 minutes away from glory       ")
-    print("You select your team. The team has randomly assigned attributes")
-    print("     Start the match and choose actions as the game plays out")
-    print("         The outcome depends on your team attributes")
+    print("""
+    Welcome to Football Stars
+    The game that puts you 90 minutes away from glory
+    You select your team. The team has randomly assigned attributes
+    Start the match and choose actions as the game plays out
+    The outcome depends on your team attributes \n
+    """)
 
     ready_game = validate_str("Are you ready? ", "y", "n")
     if ready_game == 'y':
         start_game()
     else:
-        print("You want to just chill here?")
+        sys.exit("You want to just chill here? Bye then")
 
     
 def start_game():
@@ -58,7 +61,6 @@ def display_teams():
     Display 5 random teams for user to choose from
     """
     print("\nSelect one of the following 5 teams \n")
-
     (
         first_team,
         second_team,
@@ -103,7 +105,7 @@ def display_teams():
     COMPUTER_TEAM = teams[opp_team_num]
     
    
-    print(f"\nYou have chosen {GAME_TEAM.name} \n")
+    print(f"\nYou have chosen {GAME_TEAM.name} ")
     print(f"and you will play against {COMPUTER_TEAM.name} \n")
 
 
