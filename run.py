@@ -86,7 +86,8 @@ def display_teams():
         10,
     )
 
-    teams = [first_team, second_team, third_team, fourth_team, fifth_team, sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
+    teams = [first_team, second_team, third_team, fourth_team, fifth_team, 
+             sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
     print(f"Team 1: {first_team.name}")
     print(f"Team 2: {second_team.name}")
     print(f"Team 3: {third_team.name}")
@@ -102,7 +103,8 @@ def display_teams():
     COMPUTER_TEAM = teams[opp_team_num]
     
    
-    print(f"\nYou have chosen {GAME_TEAM.name} \n and you will play against {COMPUTER_TEAM.name} \n")
+    print(f"\nYou have chosen {GAME_TEAM.name} \n")
+    print(f"and you will play against {COMPUTER_TEAM.name} \n")
 
 
 def validate_int(int1, int2):
@@ -152,8 +154,19 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     opp_team.skill = random.randint(80, 100)
     opp_team.injury = random.randint(3, 10)
     opp_team.form = random.randint(3, 10)
-    print(f"Team Stats for {current_team.name}: Defence(Max 100): {current_team.defence}, Attack(Max 100): {current_team.attack}, Stamina(Max 100): {current_team.stamina}, \n Skill(Max 100): {current_team.skill}, Injury Proneness(Max 10): {current_team.injury}, Curent Form(Max 10): {current_team.form}")
-    print(f"\nTeam Stats for {opp_team.name}: Defence(Max 100): {opp_team.defence}, Attack(Max 100): {opp_team.attack}, Stamina(Max 100): {opp_team.stamina}, \n Skill(Max 100): {opp_team.skill}, Injury Proneness(Max 10): {opp_team.injury}, Curent Form(Max 10): {opp_team.form}")
+    
+    print(f"""Team Stats for {current_team.name}: Defence(Max 100):
+     {current_team.defence}, Attack(Max 100): {current_team.attack},
+      Stamina(Max 100): {current_team.stamina}, \n Skill(Max 100):
+       {current_team.skill}, Injury Proneness(Max 10): {current_team.injury},
+        Curent Form(Max 10): {current_team.form}""")
+
+    print(f"""
+    \nTeam Stats for {opp_team.name}: Defence(Max 100): {opp_team.defence},
+     Attack(Max 100): {opp_team.attack}, Stamina(Max 100): {opp_team.stamina},
+     \n Skill(Max 100): {opp_team.skill}, Injury Proneness(Max 10): {opp_team.injury},
+     Curent Form(Max 10): {opp_team.form}
+     """)
 
 intro()
 
