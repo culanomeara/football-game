@@ -4,8 +4,8 @@
 
 import random
 
-teams = []
-game_team = ""
+GAME_TEAM = ""
+COMPUTER_TEAM = ""
 
 class Team:
     def __init__(self, name, defence, attack, stamina, skill, injury, form):
@@ -41,23 +41,23 @@ def intro():
     print("     Start the match and choose actions as the game plays out")
     print("         The outcome depends on your team attributes")
 
-    ready_game = validate_str("Are you ready?", "y", "n")
+    ready_game = validate_str("Are you ready? ", "y", "n")
     if ready_game == 'y':
         start_game()
     else:
         print("You want to just chill here?")
+
     
 def start_game():
     display_teams()
-    generate_stats(game_team)
-    
+    generate_stats(GAME_TEAM, COMPUTER_TEAM)
 
 
 def display_teams():
     """
     Display 5 random teams for user to choose from
     """
-    
+    print("\nSelect one of the following 5 teams \n")
 
     (
         first_team,
@@ -65,6 +65,11 @@ def display_teams():
         third_team,
         fourth_team,
         fifth_team,
+        sixth_team,
+        seventh_team,
+        eight_team,
+        ninth_team,
+        tenth_team
     ) = random.sample(
         {
             t1,
@@ -78,24 +83,26 @@ def display_teams():
             t9,
             t10,
         },
-        5,
+        10,
     )
 
-    teams = [first_team, second_team, third_team, fourth_team, fifth_team]
+    teams = [first_team, second_team, third_team, fourth_team, fifth_team, sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
     print(f"Team 1: {first_team.name}")
     print(f"Team 2: {second_team.name}")
-    print(f"team 3: {third_team.name}")
-    print(f"team 4: {fourth_team.name}")
-    print(f"team 5: {fifth_team.name}")
+    print(f"Team 3: {third_team.name}")
+    print(f"Team 4: {fourth_team.name}")
+    print(f"Team 5: {fifth_team.name}\n")
     
     game_team_num = validate_int(1, 5)
-    global game_team
-    game_team = teams[game_team_num - 1]
+    global GAME_TEAM
+    GAME_TEAM = teams[game_team_num - 1]
+    teams.pop(game_team_num - 1)
+    opp_team_num = random.randint(0, 8)
+    global COMPUTER_TEAM
+    COMPUTER_TEAM = teams[opp_team_num]
+    
    
-    print(f"You have chosen {game_team.name}")
-    """print(f"His current form is {form}")
-     generate_stats()
-    print("The team stats are: Defence {} " )"""
+    print(f"\nYou have chosen {GAME_TEAM.name} \n and you will play against {COMPUTER_TEAM.name} \n")
 
 
 def validate_int(int1, int2):
@@ -128,17 +135,26 @@ def validate_str(query, str1, str2):
         elif answer == valid2:
             return answer
         else:
-            print("You have to choose y or n")
+            print(f"You have to choose {str1} or {str2}")
 
-def generate_stats(game_team):
-    current_team = game_team
-    current_team.defence = random.randint(75, 90)
-    current_team.attack = random.randint(80,95)
-    current_team.stamina = random.randint(80,95)
-    current_team.skill = random.randint(80,95)
-    current_team.injury = random.randint(1,10)
-    current_team.form = random.randint(1,10)
-    print(current_team.defence, current_team.attack, current_team.stamina)
+def generate_stats(GAME_TEAM, COMPUTER_TEAM):
+    current_team = GAME_TEAM
+    opp_team = COMPUTER_TEAM
+    current_team.defence = random.randint(80, 100)
+    current_team.attack = random.randint(80, 100)
+    current_team.stamina = random.randint(80, 100)
+    current_team.skill = random.randint(80, 100)
+    current_team.injury = random.randint(3, 10)
+    current_team.form = random.randint(3, 10)
+    opp_team.defence = random.randint(80, 100)
+    opp_team.attack = random.randint(80, 100)
+    opp_team.stamina = random.randint(80, 100)
+    opp_team.skill = random.randint(80, 100)
+    opp_team.injury = random.randint(3, 10)
+    opp_team.form = random.randint(3, 10)
+    print(f"Team Stats for {current_team.name}: Defence(Max 100): {current_team.defence}, Attack(Max 100): {current_team.attack}, Stamina(Max 100): {current_team.stamina}, \n Skill(Max 100): {current_team.skill}, Injury Proneness(Max 10): {current_team.injury}, Curent Form(Max 10): {current_team.form}")
+    print(f"\nTeam Stats for {opp_team.name}: Defence(Max 100): {opp_team.defence}, Attack(Max 100): {opp_team.attack}, Stamina(Max 100): {opp_team.stamina}, \n Skill(Max 100): {opp_team.skill}, Injury Proneness(Max 10): {opp_team.injury}, Curent Form(Max 10): {opp_team.form}")
 
 intro()
+
 
