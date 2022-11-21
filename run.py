@@ -3,24 +3,8 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 import random
+import time
 import sys
-import math
-from stopwatch import Stopwatch
-#https://pypi.org/project/stopwatch.py/
-# Argument specifies decimal precision for __str__
-# e.g 2 digits = 1.00, 3 digits = 1.000
-# Optional, defaults to 2
-# stopwatch = Stopwatch(2) # Start a stopwatch
-# It's just math with time.perf_counter() so there isn't really a task
-# running in background
-
-#stopwatch.stop() # Stop stopwatch, time freezes
-#stopwatch.start() # Start it again
-#stopwatch.reset() # Reset it back to 0
-#stopwatch.restart() # Reset and start again
-#stopwatch.running # Whether stopwatch is running
-#stopwatch.duration # Get the duration (in seconds)
-#str(stopwatch) # Get a friendly duration string
 
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
@@ -224,30 +208,34 @@ def events():
     event_times = [sorted(random.sample(range(1, 90), 5))]
     print(event_times)
 
+def call_scene(scene):
+    scene_num = scene + 1
+    print(f"I'm going to do some shit here soon with scene num {scene};)")
+
 def show_timer():
     global match_clock
     event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
-    stopwatch = Stopwatch(0)
-    match_time = str(stopwatch)
-    match_clock = 1
-    for match_time in range(match_clock, 91):
+
+    match_time = 1
+    print(match_time)
+# timer code from https://www.folkstalk.com/2022/10/python-seconds-counter-with-code-examples.html
+    while match_time < 91:
+        time.sleep(1)
+        match_time += 1
+        print(match_time)
         if match_time == event_times[0]:
             print("scene 1")
-            stopwatch.stop()
             match_clock = match_time
-            print(match_clock)
-            continue
+            print(f"Match time is {match_time}")
+            call_scene(0)
         elif match_time == event_times[1]:
             print("scene 2")
-            stopwatch.stop()
             match_clock = match_time
-            print(match_clock)
-            continue
+            print(f"Match time is {match_time}")
+            call_scene(1)
         else:
-            print("oops")
-
-
+            print(f"Match time is {match_time}")
 
 show_timer()
 
