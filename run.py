@@ -237,16 +237,5 @@ def show_timer():
             call_scene(1)
         else:
             print(f"Match time is {match_time}")
-# https://codeinstitute.net/ie/blog/how-to-wait-in-python/
-def test_timer():
-    pr = os.fork()
-    if pr == 0:    
-        print("Child process will print the numbers from the range 0 to 5")
-        for i in range(0, 5):
-            print(f"Child process of {i}")      
-        print("Child process of %d existing" %os.getpid())
-        print("Process",(os.getpid()))
-
-test_timer()
 
 
