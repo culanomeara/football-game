@@ -7,6 +7,9 @@ import time
 import sys
 import os
 
+from threading import Event # Needed for the  wait() method
+from time import sleep 
+
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
 event_times = []
@@ -218,24 +221,26 @@ def show_timer():
     event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
 
-    match_time = 1
-    print(match_time)
-# timer code from https://www.folkstalk.com/2022/10/python-seconds-counter-with-code-examples.html
-    while match_time < 91:
-        time.sleep(1)
-        match_time += 1
-        print(match_time)
-        if match_time == event_times[0]:
-            print("scene 1")
-            match_clock = match_time
-            print(f"Match time is {match_time}")
-            call_scene(0)
-        elif match_time == event_times[1]:
-            print("scene 2")
-            match_clock = match_time
-            print(f"Match time is {match_time}")
-            call_scene(1)
-        else:
-            print(f"Match time is {match_time}")
+    """match_time = 1
+    print(match_time)"""
+    Event().wait(event_times[0])
+    print(f"Here {event_times[0]}")
+
+    print("scene 1")
+    match_clock = event_times[0]
+    print(f"Match time is {event_times[0]}")
+    call_scene(0)
+    Event().wait(event_times[1])
+    print(f"Here {event_times[1]}")
+    print("scene 2")
+    
+    print(f"Match time is {event_times[1]}")
+    call_scene(1)
+
+# https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
+def test_timer(): 
+    Event().wait(3) # wait() Method, useable sans thread.
+    print("\n Make it So! = )\n")
 
 
+show_timer()
