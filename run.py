@@ -1,13 +1,14 @@
 import random
 # import time
 import sys
-# import os
+import os
+import keyboard
 
 # from threading import Event # Needed for the  wait() method
 # from time import sleep 
 
-GAME_TEAM = ""
-COMPUTER_TEAM = ""
+game_team = ""
+computer_team = ""
 event_times = []
 event_num = 1
 no_events = 0
@@ -56,8 +57,7 @@ def intro():
     The outcome depends on your team attributes \n
     """)
     ready_game = validate_str(
-        "Ok to continue? (y=Yes, n=No, x=Exit) ", "y", "n", "x"
-        )
+        "Ok to continue? (y=Yes, x=Exit) ", "y", "x", "")
     if ready_game == 'y':
         start_game()
     else:
@@ -66,13 +66,15 @@ def intro():
 
 def start_game():
     """
+    Clear screen then
     Call game functions:
     To display teams for user
     To randomly generate stats for user team and computer team
     To call match start func
     """
+    os.system("clear")
     display_teams()
-    generate_stats(GAME_TEAM, COMPUTER_TEAM)
+    generate_stats(game_team, computer_team)
     match_start()
 
 
@@ -107,7 +109,6 @@ def display_teams():
         },
         10,
     )
-
     teams = [first_team, second_team, third_team, fourth_team, fifth_team, 
              sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
     print(f"Team 1: {first_team.name}")
@@ -115,24 +116,23 @@ def display_teams():
     print(f"Team 3: {third_team.name}")
     print(f"Team 4: {fourth_team.name}")
     print(f"Team 5: {fifth_team.name}\n")
-    
     game_team_num = validate_int(1, 2, 3, 4, 5, 0)
-    global GAME_TEAM
-    GAME_TEAM = teams[game_team_num - 1]
+    global game_team
+    game_team = teams[game_team_num - 1]
     teams.pop(game_team_num - 1)
     opp_team_num = random.randint(0, 8)
-    global COMPUTER_TEAM
-    COMPUTER_TEAM = teams[opp_team_num]
-    print(f"\nYou have chosen {GAME_TEAM.name} ")
-    print(f"and you will play against {COMPUTER_TEAM.name} \n")
+    global computer_team
+    computer_team = teams[opp_team_num]
+    print(f"\nYou have chosen {game_team.name} ")
+    print(f"and you will play against {computer_team.name} \n")
 
 
-def generate_stats(GAME_TEAM, COMPUTER_TEAM):
+def generate_stats(game_team, computer_team):
     """
     Generate stats for both teams and save to team attributes
     """
-    current_team = GAME_TEAM
-    opp_team = COMPUTER_TEAM
+    current_team = game_team
+    opp_team = computer_team
     current_team.defence = random.randint(80, 100)
     current_team.attack = random.randint(80, 100)
     current_team.stamina = random.randint(80, 100)
@@ -179,6 +179,7 @@ def match_start():
     If restart game is called, then we restart from beginning of program
     Otherwise, we exit the program
     """
+    os.system("clear")
     start_choice = validate_str("Are you ready to kick off?"
                                 " y=Kick Off,"
                                 " n=restart game,"
@@ -196,9 +197,9 @@ def kick_off():
     """
     Function to call game events
     """
+    os.system("clear")
     events()
     call_event()
-
 
 
 def events():
@@ -227,10 +228,13 @@ def call_event():
     """
     global event_num
     i = 1
+    
     while i <= no_events:
+        os.system("clear")
+        print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
+        print(f"             {computer_team.name} : {computer_team.goals}")
         print(f"Event {i} of {no_events}")
         eventtype = event_types[event_num-1]
-        print(eventtype)
         print(f"Match Time: {event_times[event_num-1]} mins")
         if eventtype == 0:
             print("ATTACK: What action are you taking?")
@@ -238,10 +242,11 @@ def call_event():
             user_choice = validate_int(1, 2, 3, 4, 5, 6)
             print(f"you selected {user_choice}")
             calc_targets(0)
+            os.system("clear")
             usershot = show_targets(0)
             if targets[usershot-1] == 1:
                 print("GOAL")
-                GAME_TEAM.goals += 1
+                game_team.goals += 1
             else:
                 print("Miss")
         else:
@@ -250,19 +255,21 @@ def call_event():
             user_choice = validate_int(1, 2, 3, 4, 5, 6)
             print(f"you selected {user_choice}")
             calc_targets(1)
+            os.system("clear")
             usershot = show_targets(1)
             if targets[usershot-1] == 1:
                 print("GOAL")
-                COMPUTER_TEAM.goals += 1
+                computer_team.goals += 1
             else:
                 print("SAVE")
         if i == no_events:
-            print(f"FINAL SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
-            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+            print(f"FINAL SCORE: {game_team.name} : {game_team.goals}")
+            print(f"             {computer_team.name} : {computer_team.goals}")
         else:
-            print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
-            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
-
+            print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
+            print(f"             {computer_team.name} : {computer_team.goals}")
+        print("Press any key to continue...")
+        # keyboard.wait()
         i += 1
         event_num += 1
 
