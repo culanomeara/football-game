@@ -13,6 +13,7 @@ from time import sleep
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
 event_times = []
+statdiffs = [0, 0, 0]
 match_clock = 0
 
 class Team:
@@ -63,8 +64,7 @@ def intro():
 def start_game():
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
-    match_start()
-
+    call_scene(1)
 
 def display_teams():
     """
@@ -106,7 +106,7 @@ def display_teams():
     print(f"Team 4: {fourth_team.name}")
     print(f"Team 5: {fifth_team.name}\n")
     
-    game_team_num = validate_int(1, 5)
+    game_team_num = validate_int(1, 2, 3, 4, 5, 0)
     global GAME_TEAM
     GAME_TEAM = teams[game_team_num - 1]
     teams.pop(game_team_num - 1)
@@ -129,6 +129,8 @@ def validate_int(int1, int2, int3, int4, int5, int6):
         high = int2
     elif int4 == 0:
         high = int3
+    elif int6 == 0:
+        high = int5
     else:
         high = int6
     
@@ -195,8 +197,20 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     Curent Form(Max 10): {opp_team.form}""")
 
     #calculate probabilities:
-
-
+    global statdiffs
+    defdiff = int((current_team.defence*current_team.form/10) - \
+        (opp_team.attack*opp_team.form/10))
+    print(defdiff)
+    statdiffs[0] = defdiff
+    attdiff = int((current_team.attack*current_team.form/10) - \
+        (opp_team.defence*opp_team.form/10))
+    print(attdiff)
+    statdiffs[1] = attdiff
+    skilldiff = int((current_team.skill*current_team.form/10) - \
+        (opp_team.skill*opp_team.form/10))
+    print(skilldiff)
+    statdiffs[2] = skilldiff
+    
 
 def match_start():
     start_choice = validate_str("Kick off?"
@@ -225,6 +239,7 @@ def call_scene(scene):
     print("What action are you taking? 1: Shoot, 2: Pass, 3: Dribble")
     user_choice = validate_int(1, 2, 3, 4, 5, 6)
     print(f"you selected {user_choice}")
+    print(statdiffs[0], statdiffs[1], statdiffs[2])
 
 def show_targets(attack_defend):
     if attack_defend.lower() == "a":
@@ -239,7 +254,7 @@ def show_targets(attack_defend):
 def calc_prob():
 
 
-def show_timer():
+#def show_timer():
     """global match_clock
     event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
@@ -272,4 +287,4 @@ def show_timer():
 # https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
 
 
-call_scene(1)
+intro()
