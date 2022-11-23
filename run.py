@@ -1,18 +1,15 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
-
 import random
-import time
+# import time
 import sys
-import os
+# import os
 
 # from threading import Event # Needed for the  wait() method
-from time import sleep 
+# from time import sleep 
 
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
 event_times = []
+event_num = 1
 no_events = 0
 event_types = []
 statdiffs = [0, 0, 0]
@@ -42,8 +39,6 @@ t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0, 0)
 t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0, 0)
 t10 = Team("Benfica", 0, 0, 0, 0, 0, 0, 0)
 
-
-
 def intro():
     """
     Tell the team what the game is about.
@@ -55,7 +50,6 @@ def intro():
     Start the match and choose actions as the game plays out
     The outcome depends on your team attributes \n
     """)
-
     ready_game = validate_str(
         "Ok to continue? (y=Yes, n=No, x=Exit) ", "y", "n", "x"
         )
@@ -69,7 +63,7 @@ def start_game():
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
     events()
-    call_event(1, "a")
+    call_event()
 
 def display_teams():
     """
@@ -124,49 +118,6 @@ def display_teams():
     print(f"and you will play against {COMPUTER_TEAM.name} \n")
 
 
-def validate_int(int1, int2, int3, int4, int5, int6):
-    """
-    Validates input and gives error message if invalid
-    """
-    low = int1
-
-    if int3 == 0:
-        high = int2
-    elif int4 == 0:
-        high = int3
-    elif int6 == 0:
-        high = int5
-    else:
-        high = int6
-    
-    while True:
-            try:
-                user_choice = int(input("Please make your choice: "))
-                assert low <= user_choice <= high
-            except ValueError:
-                print("Not a number! Please enter a number.")
-            except AssertionError:
-                print(f"Please enter a number between {low} and {high}")
-            else:
-                return user_choice
-
-def validate_str(query, str1, str2, str3):
-
-    valid1 = str1
-    valid2 = str2
-    valid3 = str3
-
-    while True:
-        answer = input(query).lower()
-        if answer == valid1:
-            return answer
-        elif answer == valid2:
-            return answer
-        elif answer == valid3:
-            return answer
-        else:
-            print(f"You have to choose {str1}, {str2} or {str3}")
-
 def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     current_team = GAME_TEAM
     opp_team = COMPUTER_TEAM
@@ -216,6 +167,7 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
    
     statdiffs[2] = skilldiff
 
+
 def match_start():
     start_choice = validate_str("Kick off?"
                                 " y=Kick Off,"
@@ -229,54 +181,65 @@ def match_start():
     else:
         sys.exit("You don't want to kick off? That makes me sad :( ")
 
-def kick_off():
-    global event_times
-    events()
-    #show_timer()
+# def kick_off():
+#    global event_times
+#    events()
+#   show_timer()
 
 def events():
     global event_times
     global no_events
     global event_types
-    event_times = sorted(random.sample(range(1, 90), 5))
-    print(event_times)
     no_events = random.randrange(5, 8)
-    print(no_events)
-    event_choices = ("a", "d")
+    event_times = sorted(random.sample(range(1, 90), no_events))
+    #attacking event code = 0 defend attack code = 1
+    event_choices = (0, 1)
     event_types = random.choices(event_choices, k=no_events)
-    print(event_types)
 
-def call_event(eventnum, eventtype):
-    print(f"Match Time: {event_times[eventnum-1]} mins")
-    if eventtype == "a":
-        print("ATTACK: What action are you taking?")
-        print("1: Shoot, 2: Pass, 3: Dribble")
-        user_choice = validate_int(1, 2, 3, 4, 5, 6)
-        print(f"you selected {user_choice}")
-        calc_prob(0)
-        usershot = show_targets("a")
-        if targets[usershot-1] == 1:
-            print("GOAL")
-            GAME_TEAM.goals += 1
+def call_event():
+    global event_num
+    i = 1
+    while i <= no_events:
+        print(f"Event {i} of {no_events}")
+        eventtype = event_types[event_num-1]
+        print(eventtype)
+        print(f"Match Time: {event_times[event_num-1]} mins")
+        if eventtype == 0:
+            print("ATTACK: What action are you taking?")
+            print("1: Shoot, 2: Pass, 3: Dribble")
+            user_choice = validate_int(1, 2, 3, 4, 5, 6)
+            print(f"you selected {user_choice}")
+            calc_prob(0)
+            usershot = show_targets(0)
+            if targets[usershot-1] == 1:
+                print("GOAL")
+                GAME_TEAM.goals += 1
+            else:
+                print("Miss")
         else:
-            print("Miss")
-    else:
-        print("DEFEND: What action are you taking?")
-        print("1: Tackle, 2: Pull shirt, 3: Shoulder")
-        user_choice = validate_int(1, 2, 3, 4, 5, 6)
-        print(f"you selected {user_choice}")
-        calc_prob(0)
-        usershot = show_targets("a")
-        if targets[usershot-1] == 1:
-            print("GOAL")
-            COMPUTER_TEAM.goals += 1
+            print("DEFEND: What action are you taking?")
+            print("1: Tackle, 2: Pull shirt, 3: Shoulder")
+            user_choice = validate_int(1, 2, 3, 4, 5, 6)
+            print(f"you selected {user_choice}")
+            calc_prob(1)
+            usershot = show_targets(1)
+            if targets[usershot-1] == 1:
+                print("GOAL")
+                COMPUTER_TEAM.goals += 1
+            else:
+                print("SAVE")
+        if i == no_events:
+            print(f"FINAL SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
+            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
         else:
-            print("SAVE")
-    print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
-    print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+            print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
+            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+
+        i += 1
+        event_num += 1
 
 def show_targets(attack_defend):
-    if attack_defend.lower() == "a":
+    if attack_defend == 0:
         print("Chance to Shoot: Where are you shooting?")
     else:
         print("Chance to Save: Where are you diving?")
@@ -335,5 +298,47 @@ def calc_prob(attdef):
     print(f"Match time is {event_times[4]}")"""
 # https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
 
+def validate_int(int1, int2, int3, int4, int5, int6):
+    """
+    Validates input and gives error message if invalid
+    """
+    low = int1
+
+    if int3 == 0:
+        high = int2
+    elif int4 == 0:
+        high = int3
+    elif int6 == 0:
+        high = int5
+    else:
+        high = int6
+    
+    while True:
+            try:
+                user_choice = int(input("Please make your choice: "))
+                assert low <= user_choice <= high
+            except ValueError:
+                print("Not a number! Please enter a number.")
+            except AssertionError:
+                print(f"Please enter a number between {low} and {high}")
+            else:
+                return user_choice
+
+def validate_str(query, str1, str2, str3):
+
+    valid1 = str1
+    valid2 = str2
+    valid3 = str3
+
+    while True:
+        answer = input(query).lower()
+        if answer == valid1:
+            return answer
+        elif answer == valid2:
+            return answer
+        elif answer == valid3:
+            return answer
+        else:
+            print(f"You have to choose {str1}, {str2} or {str3}")
 
 intro()
