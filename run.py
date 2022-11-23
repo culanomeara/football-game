@@ -17,7 +17,8 @@ match_clock = 0
 targets = []
 
 class Team:
-    def __init__(self, name, defence, attack, stamina, skill, injury, form, goals):
+    def __init__(self, name, defence, attack,
+                 stamina, skill, injury, form, goals):
         self.name = name
         self.defence = defence
         self.attack = attack
@@ -39,6 +40,7 @@ t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0, 0)
 t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0, 0)
 t10 = Team("Benfica", 0, 0, 0, 0, 0, 0, 0)
 
+
 def intro():
     """
     Tell the team what the game is about.
@@ -58,12 +60,16 @@ def intro():
     else:
         sys.exit("You want to just chill here? Bye then")
 
-    
+
 def start_game():
+    """
+    Call game functions
+    """
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
     events()
     call_event()
+
 
 def display_teams():
     """
@@ -119,6 +125,9 @@ def display_teams():
 
 
 def generate_stats(GAME_TEAM, COMPUTER_TEAM):
+    """
+    Generate stats for both teams and save to team attributes
+    """
     current_team = GAME_TEAM
     opp_team = COMPUTER_TEAM
     current_team.defence = random.randint(80, 100)
@@ -169,6 +178,11 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
 
 
 def match_start():
+    """
+    If user selects to start game, the game event is called
+    If restart game is called, then we restart
+    Otherwise, we exit the program
+    """
     start_choice = validate_str("Kick off?"
                                 " y=Kick Off,"
                                 " n=restart game,"
@@ -186,17 +200,31 @@ def match_start():
 #    events()
 #   show_timer()
 
+
 def events():
+    """
+    This generates the various event data:
+    First the number of events that user can act on
+    Then the match times when these events occur
+    Lastly, we randomly decide how many of the events
+    are either attack or defend scenarios
+    """
     global event_times
     global no_events
     global event_types
     no_events = random.randrange(5, 8)
     event_times = sorted(random.sample(range(1, 90), no_events))
-    #attacking event code = 0 defend attack code = 1
+    # attacking event code = 0 defend attack code = 1
     event_choices = (0, 1)
     event_types = random.choices(event_choices, k=no_events)
 
+
 def call_event():
+    """
+    Function to call each event, give user options
+    and based on user selection, determine an outcome
+    then amend scoreboard as necessary
+    """
     global event_num
     i = 1
     while i <= no_events:
@@ -209,7 +237,7 @@ def call_event():
             print("1: Shoot, 2: Pass, 3: Dribble")
             user_choice = validate_int(1, 2, 3, 4, 5, 6)
             print(f"you selected {user_choice}")
-            calc_prob(0)
+            calc_targets(0)
             usershot = show_targets(0)
             if targets[usershot-1] == 1:
                 print("GOAL")
@@ -221,7 +249,7 @@ def call_event():
             print("1: Tackle, 2: Pull shirt, 3: Shoulder")
             user_choice = validate_int(1, 2, 3, 4, 5, 6)
             print(f"you selected {user_choice}")
-            calc_prob(1)
+            calc_targets(1)
             usershot = show_targets(1)
             if targets[usershot-1] == 1:
                 print("GOAL")
@@ -238,7 +266,12 @@ def call_event():
         i += 1
         event_num += 1
 
+
 def show_targets(attack_defend):
+    """
+    Function that displays the shot options
+    takes input from user and returns that
+    """
     if attack_defend == 0:
         print("Chance to Shoot: Where are you shooting?")
     else:
@@ -250,7 +283,12 @@ def show_targets(attack_defend):
     usershot = validate_int(1, 2, 3, 4, 5, 6)
     return usershot
 
-def calc_prob(attdef):
+
+def calc_targets(attdef):
+    """
+    Calculate number of targets that nca return a GOAL
+    based on previously generated stats and probabilities
+    """
     global targets
     i = attdef
     if 16 <= statdiffs[i]:
@@ -266,7 +304,7 @@ def calc_prob(attdef):
     targets = random.sample(usertargets, 6)
     print(targets)
 
-#def show_timer():
+# def show_timer():
     """global match_clock
     event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
@@ -298,9 +336,10 @@ def calc_prob(attdef):
     print(f"Match time is {event_times[4]}")"""
 # https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
 
+
 def validate_int(int1, int2, int3, int4, int5, int6):
     """
-    Validates input and gives error message if invalid
+    Validates integer input and gives error message if invalid
     """
     low = int1
 
@@ -314,22 +353,24 @@ def validate_int(int1, int2, int3, int4, int5, int6):
         high = int6
     
     while True:
-            try:
-                user_choice = int(input("Please make your choice: "))
-                assert low <= user_choice <= high
-            except ValueError:
-                print("Not a number! Please enter a number.")
-            except AssertionError:
-                print(f"Please enter a number between {low} and {high}")
-            else:
-                return user_choice
+        try:
+            user_choice = int(input("Please make your choice: "))
+            assert low <= user_choice <= high
+        except ValueError:
+            print("Not a number! Please enter a number.")
+        except AssertionError:
+            print(f"Please enter a number between {low} and {high}")
+        else:
+            return user_choice
+
 
 def validate_str(query, str1, str2, str3):
-
+    """
+    Validates string input and gives error message if invalid
+    """
     valid1 = str1
     valid2 = str2
     valid3 = str3
-
     while True:
         answer = input(query).lower()
         if answer == valid1:
@@ -340,5 +381,6 @@ def validate_str(query, str1, str2, str3):
             return answer
         else:
             print(f"You have to choose {str1}, {str2} or {str3}")
+
 
 intro()
