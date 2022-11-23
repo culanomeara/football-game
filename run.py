@@ -15,6 +15,7 @@ COMPUTER_TEAM = ""
 event_times = []
 statdiffs = [0, 0, 0]
 match_clock = 0
+targets = []
 
 class Team:
     def __init__(self, name, defence, attack, stamina, skill, injury, form):
@@ -198,19 +199,18 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
 
     #calculate probabilities:
     global statdiffs
-    defdiff = int((current_team.defence*current_team.form/10) - \
+    defdiff = int((current_team.defence*current_team.form/10) -
         (opp_team.attack*opp_team.form/10))
     print(defdiff)
     statdiffs[0] = defdiff
-    attdiff = int((current_team.attack*current_team.form/10) - \
+    attdiff = int((current_team.attack*current_team.form/10) -
         (opp_team.defence*opp_team.form/10))
     print(attdiff)
     statdiffs[1] = attdiff
-    skilldiff = int((current_team.skill*current_team.form/10) - \
+    skilldiff = int((current_team.skill*current_team.form/10) -
         (opp_team.skill*opp_team.form/10))
     print(skilldiff)
     statdiffs[2] = skilldiff
-    
 
 def match_start():
     start_choice = validate_str("Kick off?"
@@ -240,6 +240,15 @@ def call_scene(scene):
     user_choice = validate_int(1, 2, 3, 4, 5, 6)
     print(f"you selected {user_choice}")
     print(statdiffs[0], statdiffs[1], statdiffs[2])
+    calc_prob(0)
+    usershot = show_targets("a")
+    print(f"Usershot {usershot}, {type(usershot)}")
+    print(f"target {targets[usershot-1]}, {type(targets[usershot-1])}")
+    if targets[usershot-1] == 1:
+        print("GOAL")
+    else:
+        print("Miss")
+
 
 def show_targets(attack_defend):
     if attack_defend.lower() == "a":
@@ -250,9 +259,23 @@ def show_targets(attack_defend):
     print("1: Top Left 2: Top Mid 3: Top Right")
     print("4: Bottom Left 5: Bottom Mid 6: Bottom Right")
     usershot = validate_int(1, 2, 3, 4, 5, 6)
+    return usershot
 
-def calc_prob():
-
+def calc_prob(attdef):
+    global targets
+    i = attdef
+    if 16 <= statdiffs[i]:
+        usertargets = [1, 1, 1, 1, 1, 0]
+    elif 10 <= statdiffs[i] <= 15:
+        usertargets = [1, 1, 1, 1, 0, 0]
+    elif -9 <= statdiffs[i] <= 9:
+        usertargets = [1, 1, 1, 0, 0, 0]
+    elif -15 <= statdiffs[i] <= -10:
+        usertargets = [1, 1, 0, 0, 0, 0]
+    elif statdiffs[i] <= -16:
+        usertargets = [1, 0, 0, 0, 0, 0]
+    targets = random.sample(usertargets, 6)
+    print(targets)
 
 #def show_timer():
     """global match_clock
