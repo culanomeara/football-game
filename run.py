@@ -13,12 +13,14 @@ from time import sleep
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
 event_times = []
+no_events = 0
+event_types = []
 statdiffs = [0, 0, 0]
 match_clock = 0
 targets = []
 
 class Team:
-    def __init__(self, name, defence, attack, stamina, skill, injury, form):
+    def __init__(self, name, defence, attack, stamina, skill, injury, form, goals):
         self.name = name
         self.defence = defence
         self.attack = attack
@@ -26,18 +28,19 @@ class Team:
         self.skill = skill
         self.injury = injury
         self.form = form
+        self.goals = goals
 
 
-t1 = Team("Liverpool", 0, 0, 0, 0, 0, 0)
-t2 = Team("PSG", 0, 0, 0, 0, 0, 0)
-t3 = Team("Man City", 0, 0, 0, 0, 0, 0)
-t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0)
-t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0)
-t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0)
-t7 = Team("Juventus", 0, 0, 0, 0, 0, 0)
-t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0)
-t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0)
-t10 = Team("Benfica", 0, 0, 0, 0, 0, 0)
+t1 = Team("Liverpool", 0, 0, 0, 0, 0, 0, 0)
+t2 = Team("PSG", 0, 0, 0, 0, 0, 0, 0)
+t3 = Team("Man City", 0, 0, 0, 0, 0, 0, 0)
+t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0, 0)
+t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0, 0)
+t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0, 0)
+t7 = Team("Juventus", 0, 0, 0, 0, 0, 0, 0)
+t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0, 0)
+t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0, 0)
+t10 = Team("Benfica", 0, 0, 0, 0, 0, 0, 0)
 
 
 
@@ -66,7 +69,7 @@ def start_game():
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
     events()
-    call_scene(1)
+    call_event(1, "a")
 
 def display_teams():
     """
@@ -232,7 +235,10 @@ def kick_off():
     #show_timer()
 
 def events():
-    event_times = [sorted(random.sample(range(1, 90), 5))]
+    global event_times
+    global no_events
+    global event_types
+    event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
     no_events = random.randrange(5, 8)
     print(no_events)
@@ -240,17 +246,34 @@ def events():
     event_types = random.choices(event_choices, k=no_events)
     print(event_types)
 
-def call_scene(scene):
-    print("What action are you taking? 1: Shoot, 2: Pass, 3: Dribble")
-    user_choice = validate_int(1, 2, 3, 4, 5, 6)
-    print(f"you selected {user_choice}")
-    calc_prob(0)
-    usershot = show_targets("a")
-    if targets[usershot-1] == 1:
-        print("GOAL")
+def call_event(eventnum, eventtype):
+    print(f"Match Time: {event_times[eventnum-1]} mins")
+    if eventtype == "a":
+        print("ATTACK: What action are you taking?")
+        print("1: Shoot, 2: Pass, 3: Dribble")
+        user_choice = validate_int(1, 2, 3, 4, 5, 6)
+        print(f"you selected {user_choice}")
+        calc_prob(0)
+        usershot = show_targets("a")
+        if targets[usershot-1] == 1:
+            print("GOAL")
+            GAME_TEAM.goals += 1
+        else:
+            print("Miss")
     else:
-        print("Miss")
-
+        print("DEFEND: What action are you taking?")
+        print("1: Tackle, 2: Pull shirt, 3: Shoulder")
+        user_choice = validate_int(1, 2, 3, 4, 5, 6)
+        print(f"you selected {user_choice}")
+        calc_prob(0)
+        usershot = show_targets("a")
+        if targets[usershot-1] == 1:
+            print("GOAL")
+            COMPUTER_TEAM.goals += 1
+        else:
+            print("SAVE")
+    print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
+    print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
 
 def show_targets(attack_defend):
     if attack_defend.lower() == "a":
