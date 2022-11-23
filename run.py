@@ -7,7 +7,7 @@ import time
 import sys
 import os
 
-from threading import Event # Needed for the  wait() method
+# from threading import Event # Needed for the  wait() method
 from time import sleep 
 
 GAME_TEAM = ""
@@ -119,24 +119,29 @@ def display_teams():
     print(f"and you will play against {COMPUTER_TEAM.name} \n")
 
 
-def validate_int(int1, int2):
+def validate_int(int1, int2, int3, int4, int5, int6):
     """
     Validates input and gives error message if invalid
     """
     low = int1
-    high = int2
 
+    if int3 == 0:
+        high = int2
+    elif int4 == 0:
+        high = int3
+    else:
+        high = int6
+    
     while True:
-        try:
-            user_choice = int(input("Please make your choice: "))
-            assert low <= user_choice <= high
-        except ValueError:
-            print("Not a number! Please enter a number.")
-        except AssertionError:
-            print(f"Please enter a number between {low} and {high}")
-        else:
-            return user_choice
-
+            try:
+                user_choice = int(input("Please make your choice: "))
+                assert low <= user_choice <= high
+            except ValueError:
+                print("Not a number! Please enter a number.")
+            except AssertionError:
+                print(f"Please enter a number between {low} and {high}")
+            else:
+                return user_choice
 
 def validate_str(query, str1, str2, str3):
 
@@ -213,34 +218,48 @@ def events():
     print(event_times)
 
 def call_scene(scene):
-    scene_num = scene + 1
-    print(f"I'm going to do some shit here soon with scene num {scene};)")
+    scene += 1
+    print("What action are you taking? 1: Shoot, 2: Pass, 3: Dribble")
+    user_choice = validate_int(1, 2, 3, 4, 5, 6)
+    print(f"you selected {user_choice}")
+
+def show_targets():
+    print("Chance to Shoot: Where are you shooting?")
+    print("1: Top Left 2: Top Mid 3: Top Right")
+    print("4: Bottom Left 5: Bottom Mid 6: Bottom Right")
+    usershot = validate_shot(1, 2, 3, 4, 5, 6)
 
 def show_timer():
-    global match_clock
+    """global match_clock
     event_times = sorted(random.sample(range(1, 90), 5))
     print(event_times)
 
-    """match_time = 1
-    print(match_time)"""
     Event().wait(event_times[0])
-    print(f"Here {event_times[0]}")
-
-    print("scene 1")
+    print(f"Here is event {event_times[0]}")
     match_clock = event_times[0]
     print(f"Match time is {event_times[0]}")
     call_scene(0)
-    Event().wait(event_times[1])
+    Event().wait(event_times[1]-event_times[0])
     print(f"Here {event_times[1]}")
     print("scene 2")
-    
     print(f"Match time is {event_times[1]}")
     call_scene(1)
 
+    Event().wait(event_times[2]-event_times[1])
+    call_scene(2)
+    print("scene 3")
+    print(f"Match time is {event_times[2]}")
+
+    Event().wait(event_times[3]-event_times[2])
+    call_scene(3)
+    print("scene 4")
+    print(f"Match time is {event_times[3]}")
+
+    Event().wait(event_times[4]-event_times[3])
+    call_scene(4)
+    print("scene 5")
+    print(f"Match time is {event_times[4]}")"""
 # https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
-def test_timer(): 
-    Event().wait(3) # wait() Method, useable sans thread.
-    print("\n Make it So! = )\n")
 
 
-show_timer()
+call_scene(1)
