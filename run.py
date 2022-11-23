@@ -194,6 +194,9 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     Injury Proneness(Max 10): {opp_team.injury}
     Curent Form(Max 10): {opp_team.form}""")
 
+    #calculate probabilities:
+
+
 
 def match_start():
     start_choice = validate_str("Kick off?"
@@ -223,11 +226,18 @@ def call_scene(scene):
     user_choice = validate_int(1, 2, 3, 4, 5, 6)
     print(f"you selected {user_choice}")
 
-def show_targets():
-    print("Chance to Shoot: Where are you shooting?")
+def show_targets(attack_defend):
+    if attack_defend.lower() == "a":
+        print("Chance to Shoot: Where are you shooting?")
+    else:
+        print("Chance to Save: Where are you diving?")
+
     print("1: Top Left 2: Top Mid 3: Top Right")
     print("4: Bottom Left 5: Bottom Mid 6: Bottom Right")
-    usershot = validate_shot(1, 2, 3, 4, 5, 6)
+    usershot = validate_int(1, 2, 3, 4, 5, 6)
+
+def calc_prob():
+
 
 def show_timer():
     """global match_clock
