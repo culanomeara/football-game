@@ -65,6 +65,7 @@ def intro():
 def start_game():
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
+    events()
     call_scene(1)
 
 def display_teams():
@@ -201,15 +202,15 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     global statdiffs
     defdiff = int((current_team.defence*current_team.form/10) -
         (opp_team.attack*opp_team.form/10))
-    print(defdiff)
+ 
     statdiffs[0] = defdiff
     attdiff = int((current_team.attack*current_team.form/10) -
         (opp_team.defence*opp_team.form/10))
-    print(attdiff)
+    
     statdiffs[1] = attdiff
     skilldiff = int((current_team.skill*current_team.form/10) -
         (opp_team.skill*opp_team.form/10))
-    print(skilldiff)
+   
     statdiffs[2] = skilldiff
 
 def match_start():
@@ -233,17 +234,18 @@ def kick_off():
 def events():
     event_times = [sorted(random.sample(range(1, 90), 5))]
     print(event_times)
+    no_events = random.randrange(5, 8)
+    print(no_events)
+    event_choices = ("a", "d")
+    event_types = random.choices(event_choices, k=no_events)
+    print(event_types)
 
 def call_scene(scene):
-    scene += 1
     print("What action are you taking? 1: Shoot, 2: Pass, 3: Dribble")
     user_choice = validate_int(1, 2, 3, 4, 5, 6)
     print(f"you selected {user_choice}")
-    print(statdiffs[0], statdiffs[1], statdiffs[2])
     calc_prob(0)
     usershot = show_targets("a")
-    print(f"Usershot {usershot}, {type(usershot)}")
-    print(f"target {targets[usershot-1]}, {type(targets[usershot-1])}")
     if targets[usershot-1] == 1:
         print("GOAL")
     else:
@@ -256,8 +258,9 @@ def show_targets(attack_defend):
     else:
         print("Chance to Save: Where are you diving?")
 
-    print("1: Top Left 2: Top Mid 3: Top Right")
-    print("4: Bottom Left 5: Bottom Mid 6: Bottom Right")
+    print(" 1: Top Left     2: Top Mid      3: Top Right")
+    print(" 4: Bottom Left  5: Bottom Mid   6: Bottom Right")
+
     usershot = validate_int(1, 2, 3, 4, 5, 6)
     return usershot
 
