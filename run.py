@@ -16,29 +16,32 @@ statdiffs = [0, 0, 0]
 match_clock = 0
 targets = []
 
+
 class Team:
+    """
+    Set up TEAM class with various attributes
+    """
     def __init__(self, name, defence, attack,
-                 stamina, skill, injury, form, goals):
+                 stamina, skill, form, goals):
         self.name = name
         self.defence = defence
         self.attack = attack
         self.stamina = stamina
         self.skill = skill
-        self.injury = injury
         self.form = form
         self.goals = goals
 
 
-t1 = Team("Liverpool", 0, 0, 0, 0, 0, 0, 0)
-t2 = Team("PSG", 0, 0, 0, 0, 0, 0, 0)
-t3 = Team("Man City", 0, 0, 0, 0, 0, 0, 0)
-t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0, 0)
-t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0, 0)
-t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0, 0)
-t7 = Team("Juventus", 0, 0, 0, 0, 0, 0, 0)
-t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0, 0)
-t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0, 0)
-t10 = Team("Benfica", 0, 0, 0, 0, 0, 0, 0)
+t1 = Team("Liverpool", 0, 0, 0, 0, 0, 0)
+t2 = Team("PSG", 0, 0, 0, 0, 0, 0)
+t3 = Team("Man City", 0, 0, 0, 0, 0, 0)
+t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0)
+t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0)
+t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0)
+t7 = Team("Juventus", 0, 0, 0, 0, 0, 0)
+t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0)
+t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0)
+t10 = Team("Benfica", 0, 0, 0, 0, 0, 0)
 
 
 def intro():
@@ -63,12 +66,14 @@ def intro():
 
 def start_game():
     """
-    Call game functions
+    Call game functions:
+    To display teams for user
+    To randomly generate stats for user team and computer team
+    To call match start func
     """
     display_teams()
     generate_stats(GAME_TEAM, COMPUTER_TEAM)
-    events()
-    call_event()
+    match_start()
 
 
 def display_teams():
@@ -118,8 +123,6 @@ def display_teams():
     opp_team_num = random.randint(0, 8)
     global COMPUTER_TEAM
     COMPUTER_TEAM = teams[opp_team_num]
-    
-   
     print(f"\nYou have chosen {GAME_TEAM.name} ")
     print(f"and you will play against {COMPUTER_TEAM.name} \n")
 
@@ -134,13 +137,11 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     current_team.attack = random.randint(80, 100)
     current_team.stamina = random.randint(80, 100)
     current_team.skill = random.randint(80, 100)
-    current_team.injury = random.randint(3, 10)
     current_team.form = random.randint(3, 10)
     opp_team.defence = random.randint(80, 100)
     opp_team.attack = random.randint(80, 100)
     opp_team.stamina = random.randint(80, 100)
     opp_team.skill = random.randint(80, 100)
-    opp_team.injury = random.randint(3, 10)
     opp_team.form = random.randint(3, 10)
 
     print(f"""
@@ -149,7 +150,6 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     Attack(Max 100): {current_team.attack}
     Stamina(Max 100): {current_team.stamina}
     Skill(Max 100): {current_team.skill}
-    Injury Proneness(Max 10): {current_team.injury}
     Curent Form(Max 10): {current_team.form}""")
 
     print(f"""
@@ -158,32 +158,28 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
     Attack(Max 100): {opp_team.attack}
     Stamina(Max 100): {opp_team.stamina}
     Skill(Max 100): {opp_team.skill}
-    Injury Proneness(Max 10): {opp_team.injury}
     Curent Form(Max 10): {opp_team.form}""")
 
-    #calculate probabilities:
+    # calculate probabilities:
     global statdiffs
     defdiff = int((current_team.defence*current_team.form/10) -
-        (opp_team.attack*opp_team.form/10))
- 
+                  (opp_team.attack*opp_team.form/10))
     statdiffs[0] = defdiff
     attdiff = int((current_team.attack*current_team.form/10) -
-        (opp_team.defence*opp_team.form/10))
-    
+                  (opp_team.defence*opp_team.form/10))
     statdiffs[1] = attdiff
     skilldiff = int((current_team.skill*current_team.form/10) -
-        (opp_team.skill*opp_team.form/10))
-   
+                    (opp_team.skill*opp_team.form/10))
     statdiffs[2] = skilldiff
 
 
 def match_start():
     """
-    If user selects to start game, the game event is called
-    If restart game is called, then we restart
+    If user selects to start match, the game event is called
+    If restart game is called, then we restart from beginning of program
     Otherwise, we exit the program
     """
-    start_choice = validate_str("Kick off?"
+    start_choice = validate_str("Are you ready to kick off?"
                                 " y=Kick Off,"
                                 " n=restart game,"
                                 " x=Exit", "y", "n", "x")
@@ -195,10 +191,14 @@ def match_start():
     else:
         sys.exit("You don't want to kick off? That makes me sad :( ")
 
-# def kick_off():
-#    global event_times
-#    events()
-#   show_timer()
+
+def kick_off():
+    """
+    Function to call game events
+    """
+    events()
+    call_event()
+
 
 
 def events():
