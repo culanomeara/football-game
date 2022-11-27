@@ -1,8 +1,10 @@
 import random
-# import time
+import time
 import sys
 import os
 import keyboard
+
+from graphics import game_graphics
 
 # from threading import Event # Needed for the  wait() method
 # from time import sleep 
@@ -40,24 +42,30 @@ t4 = Team("Chelsea", 0, 0, 0, 0, 0, 0)
 t5 = Team("Bayern Munich", 0, 0, 0, 0, 0, 0)
 t6 = Team("Real Madrid", 0, 0, 0, 0, 0, 0)
 t7 = Team("Juventus", 0, 0, 0, 0, 0, 0)
-t8 = Team("Glasgow Celtic", 0, 0, 0, 0, 0, 0)
+t8 = Team("Inter Milan", 0, 0, 0, 0, 0, 0)
 t9 = Team("Barcelona", 0, 0, 0, 0, 0, 0)
-t10 = Team("Benfica", 0, 0, 0, 0, 0, 0)
+t10 = Team("Borrusia Dortmund", 0, 0, 0, 0, 0, 0)
 
 
 def intro():
     """
     Tell the team what the game is about.
     """
+    print(game_graphics[0])
+    time.sleep(2.5)
     print("""
-    Welcome to Football Stars
-    The game that puts you 90 minutes away from glory
+                    ___________________________
+                     
+                     WELCOME TO FOOTBALL STARS 
+                    ___________________________
+
+        The game that puts you 90 minutes away from glory
     You select your team. The team has randomly assigned attributes
-    Start the match and choose actions as the game plays out
-    The outcome depends on your team attributes \n
+        Start the match and choose actions as the game plays out
+      The outcome depends on your team attributes and your choices \n
     """)
     ready_game = validate_str(
-        "Ok to continue? (y=Yes, x=Exit) ", "y", "x", "")
+        "Are you ready? (y = Yes, x = Exit) \n", "y", "x", "")
     if ready_game == 'y':
         start_game()
     else:
@@ -75,6 +83,7 @@ def start_game():
     os.system("clear")
     display_teams()
     generate_stats(game_team, computer_team)
+    time.sleep(2.5)
     match_start()
 
 
@@ -123,8 +132,6 @@ def display_teams():
     opp_team_num = random.randint(0, 8)
     global computer_team
     computer_team = teams[opp_team_num]
-    print(f"\nYou have chosen {game_team.name} ")
-    print(f"and you will play against {computer_team.name} \n")
 
 
 def generate_stats(game_team, computer_team):
@@ -180,10 +187,13 @@ def match_start():
     Otherwise, we exit the program
     """
     os.system("clear")
-    start_choice = validate_str("Are you ready to kick off?"
+    print(f"\nYou have chosen {game_team.name.upper()} ")
+    print(f"and you will play against {computer_team.name.upper()} \n")
+    time.sleep(3)
+    start_choice = validate_str("Are you ready to kick off? "
                                 " y=Kick Off,"
                                 " n=restart game,"
-                                " x=Exit", "y", "n", "x")
+                                " x=Exit \n", "y", "n", "x")
     if start_choice == 'y':
         kick_off()
     elif start_choice == 'n':
@@ -198,6 +208,10 @@ def kick_off():
     Function to call game events
     """
     os.system("clear")
+    print(game_graphics[4])
+    print(f"Welcome to this European Super League Match \
+            between {game_team.name} and {computer_team.name}")
+    time.sleep(4)
     events()
     call_event()
 
@@ -231,8 +245,6 @@ def call_event():
     
     while i <= no_events:
         os.system("clear")
-        print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
-        print(f"             {computer_team.name} : {computer_team.goals}")
         print(f"Event {i} of {no_events}")
         eventtype = event_types[event_num-1]
         print(f"Match Time: {event_times[event_num-1]} mins")
@@ -252,23 +264,24 @@ def call_event():
         else:
             print("DEFEND: What action are you taking?")
             print("1: Tackle, 2: Pull shirt, 3: Shoulder")
-            user_choice = validate_int(1, 2, 3, 4, 5, 6)
+            user_choice = validate_int(1, 2, 3, 0, 0, 0)
             print(f"you selected {user_choice}")
             calc_targets(1)
             os.system("clear")
             usershot = show_targets(1)
+            time.sleep(2)
             if targets[usershot-1] == 1:
-                print("GOAL")
+                print(game_graphics[1])
                 computer_team.goals += 1
             else:
-                print("SAVE")
+                print(game_graphics[2])
         if i == no_events:
             print(f"FINAL SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
         else:
             print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
-        print("Press any key to continue...")
+            time.sleep(2.5)
         # keyboard.wait()
         i += 1
         event_num += 1
@@ -279,13 +292,15 @@ def show_targets(attack_defend):
     Function that displays the shot options
     takes input from user and returns that
     """
+    print(game_graphics[3])
+    time.sleep(2)
+    os.system("clear")
     if attack_defend == 0:
-        print("Chance to Shoot: Where are you shooting?")
+        print("Chance to Shoot: Where are you shooting?\n")
     else:
-        print("Chance to Save: Where are you diving?")
-
+        print("Chance to Save: Where are you diving?\n")
     print(" 1: Top Left     2: Top Mid      3: Top Right")
-    print(" 4: Bottom Left  5: Bottom Mid   6: Bottom Right")
+    print(" 4: Low Left  5: Low Mid   6: Low Right")
 
     usershot = validate_int(1, 2, 3, 4, 5, 6)
     return usershot
@@ -311,45 +326,12 @@ def calc_targets(attdef):
     targets = random.sample(usertargets, 6)
     print(targets)
 
-# def show_timer():
-    """global match_clock
-    event_times = sorted(random.sample(range(1, 90), 5))
-    print(event_times)
-
-    Event().wait(event_times[0])
-    print(f"Here is event {event_times[0]}")
-    match_clock = event_times[0]
-    print(f"Match time is {event_times[0]}")
-    call_scene(0)
-    Event().wait(event_times[1]-event_times[0])
-    print(f"Here {event_times[1]}")
-    print("scene 2")
-    print(f"Match time is {event_times[1]}")
-    call_scene(1)
-
-    Event().wait(event_times[2]-event_times[1])
-    call_scene(2)
-    print("scene 3")
-    print(f"Match time is {event_times[2]}")
-
-    Event().wait(event_times[3]-event_times[2])
-    call_scene(3)
-    print("scene 4")
-    print(f"Match time is {event_times[3]}")
-
-    Event().wait(event_times[4]-event_times[3])
-    call_scene(4)
-    print("scene 5")
-    print(f"Match time is {event_times[4]}")"""
-# https://stackoverflow.com/questions/29082268/python-time-sleep-vs-event-wait
-
 
 def validate_int(int1, int2, int3, int4, int5, int6):
     """
     Validates integer input and gives error message if invalid
     """
     low = int1
-
     if int3 == 0:
         high = int2
     elif int4 == 0:
