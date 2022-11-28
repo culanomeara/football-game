@@ -67,7 +67,13 @@ def intro():
     ready_game = validate_str(
         "Are you ready? (y = Yes, x = Exit) \n", "y", "x", "")
     if ready_game == 'y':
-        start_game()
+        # start_game()
+        # https://stackoverflow.com/questions/68288574/how-to-print-blinking-text-that-blinks-between-two-different-text-while-blinking
+        for _ in range(4):  # Change to control no. of 'blinks'
+            print(game_graphics[1], end='\r')
+            time.sleep(1)
+            sys.stdout.write('\033[2K\r')
+            time.sleep(1)
     else:
         sys.exit("You want to just chill here? Bye then")
 
@@ -249,18 +255,34 @@ def call_event():
         eventtype = event_types[event_num-1]
         print(f"Match Time: {event_times[event_num-1]} mins")
         if eventtype == 0:
-            print("ATTACK: What action are you taking?")
+            print("""
+                            ATTACK:
+            The {game_team.name} team are attacking
+                with pace down the left wing")
+            """)
+            print_delay("> > > > > > >")
+            print("What action are you taking?")
             print("1: Shoot, 2: Pass, 3: Dribble")
-            user_choice = validate_int(1, 2, 3, 4, 5, 6)
-            print(f"you selected {user_choice}")
+            user_choice = validate_int(1, 2, 3, 0, 0, 0)
+            if user_choice == 1:
+                print(f"The {game_team.name} player has decided to shoot")
+            elif user_choice == 2:
+                print(f"The {game_team.name} player has decided to pass")
+            else:
+                print(f"The {game_team.name} player has decided to dribble")
+            print_delay("......")
             calc_targets(0)
             os.system("clear")
             usershot = show_targets(0)
             if targets[usershot-1] == 1:
-                print("GOAL")
+                i = 1
+                while i < 5:
+                    print(game_graphics[1])
+                    os.system("clear")
+                    i += 1
                 game_team.goals += 1
             else:
-                print("Miss")
+                print(game_graphics[2])
         else:
             print("DEFEND: What action are you taking?")
             print("1: Tackle, 2: Pull shirt, 3: Shoulder")
@@ -325,6 +347,14 @@ def calc_targets(attdef):
         usertargets = [1, 0, 0, 0, 0, 0]
     targets = random.sample(usertargets, 6)
     print(targets)
+
+
+def print_delay(displaytext):
+    for char in displaytext:
+        # https://stackoverflow.com/questions/4627033/how-to-print-a-string-with-a-little-delay-between-the-chars
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.4)
 
 
 def validate_int(int1, int2, int3, int4, int5, int6):
