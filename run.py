@@ -3,11 +3,13 @@ import time
 import sys
 import os
 import keyboard
+import termcolor
 
 from graphics import game_graphics
+from termcolor import colored, cprint
 
 # from threading import Event # Needed for the  wait() method
-# from time import sleep 
+# from time import sleep
 
 game_team = ""
 computer_team = ""
@@ -52,11 +54,11 @@ def intro():
     Tell the team what the game is about.
     """
     print(game_graphics[0])
-    time.sleep(2.5)
+    time.sleep(1.5)
     print("""
                     ___________________________
-                     
-                     WELCOME TO FOOTBALL STARS 
+
+                     WELCOME TO FOOTBALL STARS
                     ___________________________
 
         The game that puts you 90 minutes away from glory
@@ -67,13 +69,19 @@ def intro():
     ready_game = validate_str(
         "Are you ready? (y = Yes, x = Exit) \n", "y", "x", "")
     if ready_game == 'y':
-        # start_game()
+        start_game()
         # https://stackoverflow.com/questions/68288574/how-to-print-blinking-text-that-blinks-between-two-different-text-while-blinking
+        """
         for _ in range(4):  # Change to control no. of 'blinks'
             print(game_graphics[1], end='\r')
             time.sleep(1)
             sys.stdout.write('\033[2K\r')
             time.sleep(1)
+            os.system("clear")
+
+        text = colored("Hello, World!", "red", attrs=['blink'])
+        print(text)
+        """
     else:
         sys.exit("You want to just chill here? Bye then")
 
@@ -124,7 +132,7 @@ def display_teams():
         },
         10,
     )
-    teams = [first_team, second_team, third_team, fourth_team, fifth_team, 
+    teams = [first_team, second_team, third_team, fourth_team, fifth_team,
              sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
     print(f"Team 1: {first_team.name}")
     print(f"Team 2: {second_team.name}")
@@ -164,7 +172,7 @@ def generate_stats(game_team, computer_team):
     Stamina(Max 100): {current_team.stamina}
     Skill(Max 100): {current_team.skill}
     Curent Form(Max 10): {current_team.form}""")
-
+    time.sleep(2)
     print(f"""
     TEAM STATS FOR {opp_team.name.upper()}:
     Defence(Max 100): {opp_team.defence},
@@ -172,7 +180,7 @@ def generate_stats(game_team, computer_team):
     Stamina(Max 100): {opp_team.stamina}
     Skill(Max 100): {opp_team.skill}
     Curent Form(Max 10): {opp_team.form}""")
-
+    time.sleep(2)
     # calculate probabilities:
     global statdiffs
     defdiff = int((current_team.defence*current_team.form/10) -
@@ -216,8 +224,8 @@ def kick_off():
     os.system("clear")
     print(game_graphics[4])
     print(f"Welcome to this European Super League Match \
-            between {game_team.name} and {computer_team.name}")
-    time.sleep(4)
+        between {game_team.name} and {computer_team.name}")
+    time.sleep(2)
     events()
     call_event()
 
@@ -248,7 +256,6 @@ def call_event():
     """
     global event_num
     i = 1
-    
     while i <= no_events:
         os.system("clear")
         print(f"Event {i} of {no_events}")
@@ -330,7 +337,7 @@ def show_targets(attack_defend):
 
 def calc_targets(attdef):
     """
-    Calculate number of targets that nca return a GOAL
+    Calculate number of targets that can return a GOAL
     based on previously generated stats and probabilities
     """
     global targets
@@ -370,7 +377,7 @@ def validate_int(int1, int2, int3, int4, int5, int6):
         high = int5
     else:
         high = int6
-    
+
     while True:
         try:
             user_choice = int(input("Please make your choice: "))
