@@ -60,5 +60,12 @@ ___________!!____________________________________________!!___________
     You select your team. The team has randomly assigned attributes
         Start the match and choose actions as the game plays out
       The outcome depends on your team attributes and your choices \n
-    """
+""",
+"""
+   _____ ___ _    ________
+  / ___//   | |  / / ____/
+  \__ \/ /| | | / / __/   
+ ___/ / ___ | |/ / /___   
+/____/_/  |_|___/_____/   
+"""
 ]

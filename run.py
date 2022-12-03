@@ -211,8 +211,8 @@ def kick_off():
     Function to call game events
     """
     os.system("clear")
-    print(f"Welcome to this European Super League Match \
-        between {game_team.name} and {computer_team.name}")
+    print("Welcome to this European Super League Match")
+    print(f"between {game_team.name} and {computer_team.name}")
     time.sleep(2)
     os.system("clear")
     print(game_graphics[4])
@@ -269,6 +269,19 @@ def call_event():
             print(f"FINAL SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
             pause()
+            start_choice = validate_str("What do you want to do now? "
+                                " y = kick off match again,"
+                                " n = restart game,"
+                                " x = Exit \n", "y", "n", "x")
+    if start_choice == 'y':
+        os.system('clear')
+        kick_off()
+    elif start_choice == 'n':
+        print("We're just going to restart the game so...")
+        os.system('clear')
+        intro()
+    else:
+        sys.exit("You don't want to kick off? That makes me sad :( ")
         else:
             print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
@@ -367,7 +380,7 @@ def shoot(attdef):
     and adjusts match score as needed.
     
     """
-    calc_targets(0)
+    calc_targets(attdef)
     os.system("clear")
     usershot = show_targets(attdef)
     os.system("clear")
@@ -377,7 +390,10 @@ def shoot(attdef):
         os.system("clear")
         goal_yn = 'y'
     else:
-        print(game_graphics[2])
+        if attdef == 0:
+            print(game_graphics[2])
+        else:
+            print(game_graphics[6])
         pause()
         os.system("clear")
         goal_yn = 'n'
