@@ -24,6 +24,7 @@ statdiffs = [0, 0, 0]
 match_clock = 0
 targets = []
 outcomes = []
+shot_outcome = ''
 
 
 class Team:
@@ -76,7 +77,6 @@ def start_game():
     os.system("clear")
     display_teams()
     generate_stats(game_team, computer_team)
-    time.sleep(2.5)
     match_start()
 
 
@@ -143,32 +143,35 @@ def generate_stats(game_team, computer_team):
     opp_team.stamina = random.randint(80, 100)
     opp_team.skill = random.randint(80, 100)
     opp_team.form = random.randint(3, 10)
+    print(f"\nYou have chosen {game_team.name} ")
+    print(f"and you will play against {computer_team.name}\n")
     show_stats = validate_str(
         "Do you want to see the team stats? (y = Yes, n = No, q = Quit) \
             \n", "y", "n", "q")
+    os.system('clear')
     if show_stats == 'y':
-        os.system('clear')
         print(f"""
-        TEAM STATS FOR {current_team.name.upper()}:
-            Defence(Max 100): {current_team.defence}
-            Attack(Max 100): {current_team.attack}
-            Stamina(Max 100): {current_team.stamina}
-            Skill(Max 100): {current_team.skill}
-            Curent Form(Max 10): {current_team.form}""")
-        pause(f'/nPress any key to show {opp_team.name} stats')
-        os.system("clear")
-        print(f"""
-        TEAM STATS FOR {opp_team.name.upper()}:
-            Defence(Max 100): {opp_team.defence}
-            Attack(Max 100): {opp_team.attack}
-            Stamina(Max 100): {opp_team.stamina}
-            Skill(Max 100): {opp_team.skill}
-            Curent Form(Max 10): {opp_team.form}""")
+        Defence(Max 100):
+            {current_team.name}: {current_team.defence}
+            {opp_team.name}: {opp_team.defence}
+        Attack(Max 100):
+            {current_team.name}: {current_team.attack}
+            {opp_team.name}: {opp_team.attack}
+        Stamina(Max 100):
+            {current_team.name}: {current_team.stamina}
+            {opp_team.name}: {opp_team.stamina}  
+        Skill(Max 100):
+            {current_team.name}: {current_team.skill}
+            {opp_team.name}: {opp_team.skill}
+        Form(Max 10):
+            {current_team.name}: {current_team.form}
+            {opp_team.name}: {opp_team.form}""")
         pause()
+        os.system("clear")
     elif show_stats == 'n':
         return
     else:
-        os.system('exit')      
+        sys.exit("They think it's all over...It is now!")
     # calculate probabilities:
     global statdiffs
     defdiff = int((current_team.defence*current_team.form/10) -
@@ -189,13 +192,10 @@ def match_start():
     Otherwise, we exit the program
     """
     os.system("clear")
-    print(f"\nYou have chosen {game_team.name.upper()} ")
-    print(f"and you will play against {computer_team.name.upper()} \n")
-    time.sleep(3)
     start_choice = validate_str("Are you ready to kick off? "
-                                " y=Kick Off,"
-                                " n=restart game,"
-                                " x=Exit \n", "y", "n", "x")
+                                " y = Kick Off,"
+                                " n = restart game,"
+                                " x = Exit \n", "y", "n", "x")
     if start_choice == 'y':
         kick_off()
     elif start_choice == 'n':
@@ -213,8 +213,8 @@ def kick_off():
     os.system("clear")
     print(f"Welcome to this European Super League Match \
         between {game_team.name} and {computer_team.name}")
-    os.system("clear")
     time.sleep(2)
+    os.system("clear")
     print(game_graphics[4])
     time.sleep(2)
     events()
@@ -255,15 +255,24 @@ def call_event():
         print(f"Match Time: {event_times[event_num-1]} mins")
         if eventtype == 0:
             attack_play()
+            if shot_outcome == 'y':
+                game_team.goals += 1
+            else:
+                game_team.goals += 0
         else:
             defend_play()
+            if shot_outcome == 'y':
+                computer_team.goals += 1
+            else:
+                game_team.goals += 0
         if i == no_events:
             print(f"FINAL SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
+            pause()
         else:
             print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
-        time.sleep(2.5)
+            pause()
         i += 1
         event_num += 1
 
@@ -274,8 +283,9 @@ def attack_play():
     It gives user attacking options and based
     on the choice, calls outcomes
     """
+    global shot_outcome
     calc_outcomes(0)
-    print("\nATTACK:\n")
+    print("\nATTACK: ")
     attack_desc = random.randrange(0, 4)
     print(f"{game_team.name} {event_desc[attack_desc]}")
     print_delay("> > > > > > >")
@@ -285,22 +295,25 @@ def attack_play():
     if user_choice == 1:
         print(f"The {game_team.name} player has decided to shoot")
         print_delay("......")
+        print("\n")
         if outcomes[0] == 1:
-            shoot()
+            shot_outcome = shoot(0)
         else:
             print("He skies it over the bar")
     elif user_choice == 2:
         print(f"The {game_team.name} player has decided to pass")
         print_delay("......")
+        print("\n")
         if outcomes[1] == 1:
-            shoot()
+            shot_outcome = shoot(0)
         else:
             print("The pass is intercepted and the attack breaks down")
     else:
         print(f"The {game_team.name} player has decided to dribble")
         print_delay("......")
+        print("\n")
         if outcomes[2] == 1:
-            shoot()
+            shot_outcome = shoot(0)
         else:
             print("He loses the ball. Bad decision to dribble!")
 
@@ -311,8 +324,9 @@ def defend_play():
     It gives user defending options and based
     on the choice, calls outcomes
     """
+    global shot_outcome
     calc_outcomes(1)
-    print("\nDEFEND:\n")
+    print("\nDEFEND: ")
     def_desc = random.randrange(0, 4)
     print(f"{computer_team.name} {event_desc[def_desc]}")
     print_delay("< < < < < < <")
@@ -322,44 +336,52 @@ def defend_play():
     if user_choice == 1:
         print(f"The {game_team.name} player has decided to tackle")
         print_delay("......")
+        print("\n")
         if outcomes[0] == 0:
-            shoot()
+            shot_outcome = shoot(1)
         else:
             print("What a tackle! He clears the ball")
     elif user_choice == 2:
-        print(f"The {game_team.name} player has decided to pressure the player")
+        print(f"The {game_team.name} player has decided to press the player")
         print_delay("......")
+        print("\n")
         if outcomes[1] == 0:
-            shoot()
+            shot_outcome = shoot(1)
         else:
             print("The pressure tells and the defender stops the attack")
     else:
         print(f"The {game_team.name} player has decided to foul him")
         print_delay("......")
+        print("\n")
         if outcomes[2] == 0:
-            shoot()
+            shot_outcome = shoot(1)
         else:
             print("The ref didn't see the foul and the attacker is raging!")
 
 
-def shoot():
+def shoot(attdef):
     """
     Function that is called when user choice leads to a shot.
+    Argument is attdef: att = 0 def = 1
     This calls the related function and prints the related graphic
     and adjusts match score as needed.
+    
     """
     calc_targets(0)
     os.system("clear")
-    usershot = show_targets(0)
+    usershot = show_targets(attdef)
+    os.system("clear")
     if targets[usershot-1] == 1:
         print(game_graphics[1])
         pause()
         os.system("clear")
-        game_team.goals += 1
+        goal_yn = 'y'
     else:
         print(game_graphics[2])
         pause()
         os.system("clear")
+        goal_yn = 'n'
+    return goal_yn
 
 
 def show_targets(attack_defend):
@@ -369,11 +391,10 @@ def show_targets(attack_defend):
     """
     print(game_graphics[3])
     time.sleep(2)
-    os.system("clear")
     if attack_defend == 0:
-        print("Chance to Shoot: Where are you shooting?\n")
+        print("\nChance to Shoot: Where are you shooting?\n")
     else:
-        print("Chance to Save: Where are you diving?\n")
+        print("\nChance to Save: Where are you diving?\n")
     print(" 1: Top Left     2: Top Mid      3: Top Right")
     print(" 4: Low Left  5: Low Mid   6: Low Right")
 
