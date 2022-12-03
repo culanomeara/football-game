@@ -60,7 +60,7 @@ def intro():
     print(game_graphics[0])
     time.sleep(2)
     os.system("clear")
-    print(game_graphics[4])
+    print(game_graphics[5])
     pause()
     start_game()
 
@@ -274,32 +274,35 @@ def attack_play():
     It gives user attacking options and based
     on the choice, calls outcomes
     """
-    print("ATTACK:\n")
+    calc_outcomes(0)
+    print("\nATTACK:\n")
     attack_desc = random.randrange(0, 4)
-    print(event_desc[attack_desc])
+    print(f"{game_team.name} {event_desc[attack_desc]}")
     print_delay("> > > > > > >")
-    print("What action are you taking?")
-    print("1: Shoot, 2: Pass, 3: Dribble")
+    print("\nWhat action are you taking?")
+    print("1: Shoot, 2: Pass, 3: Dribble\n")
     user_choice = validate_int(1, 2, 3, 0, 0, 0)
     if user_choice == 1:
         print(f"The {game_team.name} player has decided to shoot")
+        print_delay("......")
+        if outcomes[0] == 1:
+            shoot()
+        else:
+            print("He skies it over the bar")
     elif user_choice == 2:
         print(f"The {game_team.name} player has decided to pass")
+        print_delay("......")
+        if outcomes[1] == 1:
+            shoot()
+        else:
+            print("The pass is intercepted and the attack breaks down")
     else:
         print(f"The {game_team.name} player has decided to dribble")
-    print_delay("......")
-    calc_targets(0)
-    os.system("clear")
-    usershot = show_targets(0)
-    if targets[usershot-1] == 1:
-        i = 1
-        while i < 5:
-            print(game_graphics[1])
-            os.system("clear")
-            i += 1
-        game_team.goals += 1
-    else:
-        print(game_graphics[2])
+        print_delay("......")
+        if outcomes[2] == 1:
+            shoot()
+        else:
+            print("He loses the ball. Bad decision to dribble!")
 
 
 def defend_play():
@@ -308,20 +311,56 @@ def defend_play():
     It gives user defending options and based
     on the choice, calls outcomes
     """
-    print("DEFEND: What action are you taking?")
-    print("1: Tackle, 2: Pull shirt, 3: Shoulder")
+    calc_outcomes(1)
+    print("\nDEFEND:\n")
+    def_desc = random.randrange(0, 4)
+    print(f"{computer_team.name} {event_desc[def_desc]}")
+    print_delay("< < < < < < <")
+    print("\nWhat action are you taking?")
+    print("1: Tackle, 2: Press, 3: Foul\n")
     user_choice = validate_int(1, 2, 3, 0, 0, 0)
-    print(f"you selected {user_choice}")
-    calc_targets(1)
+    if user_choice == 1:
+        print(f"The {game_team.name} player has decided to tackle")
+        print_delay("......")
+        if outcomes[0] == 0:
+            shoot()
+        else:
+            print("What a tackle! He clears the ball")
+    elif user_choice == 2:
+        print(f"The {game_team.name} player has decided to pressure the player")
+        print_delay("......")
+        if outcomes[1] == 0:
+            shoot()
+        else:
+            print("The pressure tells and the defender stops the attack")
+    else:
+        print(f"The {game_team.name} player has decided to foul him")
+        print_delay("......")
+        if outcomes[2] == 0:
+            shoot()
+        else:
+            print("The ref didn't see the foul and the attacker is raging!")
+
+
+def shoot():
+    """
+    Function that is called when user choice leads to a shot.
+    This calls the related function and prints the related graphic
+    and adjusts match score as needed.
+    """
+    calc_targets(0)
     os.system("clear")
-    usershot = show_targets(1)
-    time.sleep(2)
+    usershot = show_targets(0)
     if targets[usershot-1] == 1:
         print(game_graphics[1])
-        computer_team.goals += 1
+        pause()
+        os.system("clear")
+        game_team.goals += 1
     else:
         print(game_graphics[2])
-    
+        pause()
+        os.system("clear")
+
 
 def show_targets(attack_defend):
     """
@@ -362,7 +401,7 @@ def calc_targets(attdef):
     targets = random.sample(usertargets, 6)
 
 
-def calc_outcomes():
+def calc_outcomes(attdef):
     """
     Function that randomly decides whether user choice will lead
     to a shot or not.
@@ -370,12 +409,20 @@ def calc_outcomes():
     Function fills the outcomes global array
     """
     global outcomes
-    if 10 <= statdiffs[2]:
-        useroutcomes = [1, 1, 1]
-    elif -9 <= statdiffs[2] <= 9:
-        useroutcomes = [1, 1, 0]
-    elif statdiffs[2] <= -10:
-        useroutcomes = [1, 0, 0]
+    if attdef == 0:
+        if 10 <= statdiffs[2]:
+            useroutcomes = [1, 1, 1]
+        elif -9 <= statdiffs[2] <= 9:
+            useroutcomes = [1, 1, 0]
+        elif statdiffs[2] <= -10:
+            useroutcomes = [1, 0, 0]
+    else:
+        if 10 <= statdiffs[2]:
+            useroutcomes = [1, 0, 0]
+        elif -9 <= statdiffs[2] <= 9:
+            useroutcomes = [1, 1, 0]
+        elif statdiffs[2] <= -10:
+            useroutcomes = [1, 1, 1]
     outcomes = random.sample(useroutcomes, 3)
 
 
