@@ -49,5 +49,16 @@ ___________!!____________________________________________!!___________
   / ,<   / // /   / ,< ______/ / / / /_  / /_    
  / /| |_/ // /___/ /| /_____/ /_/ / __/ / __/    
 /_/ |_/___/\____/_/ |_|     \____/_/   /_/       
+""",
 """
+                    ___________________________
+                     
+                     WELCOME TO FOOTBALL STARS 
+                    ___________________________
+
+        The game that puts you 90 minutes away from glory
+    You select your team. The team has randomly assigned attributes
+        Start the match and choose actions as the game plays out
+      The outcome depends on your team attributes and your choices \n
+    """
 ]

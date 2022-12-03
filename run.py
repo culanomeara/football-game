@@ -2,12 +2,14 @@ import random
 import time
 import sys
 import os
-import keyboard
-import termcolor
-from getch import getch, pause
+# import keyboard
+# import termcolor
+# https://github.com/joeyespo/py-getch
+from getch import pause
 
 from graphics import game_graphics
-from termcolor import colored, cprint
+from eventdescriptions import event_desc
+# from termcolor import colored, cprint
 
 # from threading import Event # Needed for the  wait() method
 # from time import sleep 
@@ -21,6 +23,7 @@ event_types = []
 statdiffs = [0, 0, 0]
 match_clock = 0
 targets = []
+outcomes = []
 
 
 class Team:
@@ -55,19 +58,9 @@ def intro():
     Tell the team what the game is about.
     """
     print(game_graphics[0])
-    time.sleep(2.5)
+    time.sleep(2)
     os.system("clear")
-    print("""
-                    ___________________________
-                     
-                     WELCOME TO FOOTBALL STARS 
-                    ___________________________
-
-        The game that puts you 90 minutes away from glory
-    You select your team. The team has randomly assigned attributes
-        Start the match and choose actions as the game plays out
-      The outcome depends on your team attributes and your choices \n
-    """)
+    print(game_graphics[4])
     pause()
     start_game()
 
@@ -220,9 +213,12 @@ def kick_off():
     os.system("clear")
     print(f"Welcome to this European Super League Match \
         between {game_team.name} and {computer_team.name}")
+    os.system("clear")
+    time.sleep(2)
     print(game_graphics[4])
     time.sleep(2)
     events()
+    time.sleep(2)
     call_event()
 
 
@@ -258,59 +254,74 @@ def call_event():
         eventtype = event_types[event_num-1]
         print(f"Match Time: {event_times[event_num-1]} mins")
         if eventtype == 0:
-            print("""
-                            ATTACK:
-            The {game_team.name} team are attacking
-                with pace down the left wing")
-            """)
-            print_delay("> > > > > > >")
-            print("What action are you taking?")
-            print("1: Shoot, 2: Pass, 3: Dribble")
-            user_choice = validate_int(1, 2, 3, 0, 0, 0)
-            if user_choice == 1:
-                print(f"The {game_team.name} player has decided to shoot")
-            elif user_choice == 2:
-                print(f"The {game_team.name} player has decided to pass")
-            else:
-                print(f"The {game_team.name} player has decided to dribble")
-            print_delay("......")
-            calc_targets(0)
-            os.system("clear")
-            usershot = show_targets(0)
-            if targets[usershot-1] == 1:
-                i = 1
-                while i < 5:
-                    print(game_graphics[1])
-                    os.system("clear")
-                    i += 1
-                game_team.goals += 1
-            else:
-                print(game_graphics[2])
+            attack_play()
         else:
-            print("DEFEND: What action are you taking?")
-            print("1: Tackle, 2: Pull shirt, 3: Shoulder")
-            user_choice = validate_int(1, 2, 3, 0, 0, 0)
-            print(f"you selected {user_choice}")
-            calc_targets(1)
-            os.system("clear")
-            usershot = show_targets(1)
-            time.sleep(2)
-            if targets[usershot-1] == 1:
-                print(game_graphics[1])
-                computer_team.goals += 1
-            else:
-                print(game_graphics[2])
+            defend_play()
         if i == no_events:
             print(f"FINAL SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
         else:
             print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
-            time.sleep(2.5)
-        # keyboard.wait()
+        time.sleep(2.5)
         i += 1
         event_num += 1
 
+
+def attack_play():
+    """
+    Function called when event is attack type.
+    It gives user attacking options and based
+    on the choice, calls outcomes
+    """
+    print("ATTACK:\n")
+    attack_desc = random.randrange(0, 4)
+    print(event_desc[attack_desc])
+    print_delay("> > > > > > >")
+    print("What action are you taking?")
+    print("1: Shoot, 2: Pass, 3: Dribble")
+    user_choice = validate_int(1, 2, 3, 0, 0, 0)
+    if user_choice == 1:
+        print(f"The {game_team.name} player has decided to shoot")
+    elif user_choice == 2:
+        print(f"The {game_team.name} player has decided to pass")
+    else:
+        print(f"The {game_team.name} player has decided to dribble")
+    print_delay("......")
+    calc_targets(0)
+    os.system("clear")
+    usershot = show_targets(0)
+    if targets[usershot-1] == 1:
+        i = 1
+        while i < 5:
+            print(game_graphics[1])
+            os.system("clear")
+            i += 1
+        game_team.goals += 1
+    else:
+        print(game_graphics[2])
+
+
+def defend_play():
+    """
+    Function called when event is defend type.
+    It gives user defending options and based
+    on the choice, calls outcomes
+    """
+    print("DEFEND: What action are you taking?")
+    print("1: Tackle, 2: Pull shirt, 3: Shoulder")
+    user_choice = validate_int(1, 2, 3, 0, 0, 0)
+    print(f"you selected {user_choice}")
+    calc_targets(1)
+    os.system("clear")
+    usershot = show_targets(1)
+    time.sleep(2)
+    if targets[usershot-1] == 1:
+        print(game_graphics[1])
+        computer_team.goals += 1
+    else:
+        print(game_graphics[2])
+    
 
 def show_targets(attack_defend):
     """
@@ -349,10 +360,30 @@ def calc_targets(attdef):
     elif statdiffs[i] <= -16:
         usertargets = [1, 0, 0, 0, 0, 0]
     targets = random.sample(usertargets, 6)
-    print(targets)
+
+
+def calc_outcomes():
+    """
+    Function that randomly decides whether user choice will lead
+    to a shot or not.
+    Based on statsdiff skill rating.
+    Function fills the outcomes global array
+    """
+    global outcomes
+    if 10 <= statdiffs[2]:
+        useroutcomes = [1, 1, 1]
+    elif -9 <= statdiffs[2] <= 9:
+        useroutcomes = [1, 1, 0]
+    elif statdiffs[2] <= -10:
+        useroutcomes = [1, 0, 0]
+    outcomes = random.sample(useroutcomes, 3)
 
 
 def print_delay(displaytext):
+    """
+    Function that allow print text to be printed slowly
+    adding to the drama!
+    """
     for char in displaytext:
         # https://stackoverflow.com/questions/4627033/how-to-print-a-string-with-a-little-delay-between-the-chars
         sys.stdout.write(char)
