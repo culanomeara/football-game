@@ -212,7 +212,6 @@ def kick_off():
     print(game_graphics[4])
     time.sleep(2)
     events()
-    time.sleep(2)
     call_event()
 
 
@@ -335,7 +334,7 @@ def defend_play():
     SHOT_OUTCOME = 0
     calc_outcomes(1)
     print("\nDEFEND: ")
-    def_desc = random.randrange(0, 4)
+    def_desc = random.randrange(0, 7)
     print(f"{COMPUTER_TEAM.name} {event_desc[def_desc]}")
     print_delay("< < < < < < <")
     print("\nWhat action are you taking?")
