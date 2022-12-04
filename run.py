@@ -2,17 +2,11 @@ import random
 import time
 import sys
 import os
-# import keyboard
-# import termcolor
 # https://github.com/joeyespo/py-getch
 from getch import pause
 
 from graphics import game_graphics
-from eventdescriptions import event_desc
-# from termcolor import colored, cprint
-
-# from threading import Event # Needed for the  wait() method
-# from time import sleep 
+from eventdescriptions import event_desc 
 
 game_team = ""
 computer_team = ""
