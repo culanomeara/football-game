@@ -267,19 +267,19 @@ def call_event():
                                 " y = kick off match again,"
                                 " n = restart game,"
                                 " x = Exit \n", "y", "n", "x")
+            if start_choice == 'y':
+                os.system('clear')
+                kick_off()
+            elif start_choice == 'n':
+                print("We're just going to restart the game so...")
+                os.system('clear')
+                intro()
+            else:
+                sys.exit("You don't want to kick off? That makes me sad :( ") 
         else:
             print(f"MATCH SCORE: {game_team.name} : {game_team.goals}")
             print(f"             {computer_team.name} : {computer_team.goals}")
             pause()
-    if start_choice == 'y':
-        os.system('clear')
-        kick_off()
-    elif start_choice == 'n':
-        print("We're just going to restart the game so...")
-        os.system('clear')
-        intro()
-    else:
-        sys.exit("You don't want to kick off? That makes me sad :( ")
         i += 1
         event_num += 1
 
