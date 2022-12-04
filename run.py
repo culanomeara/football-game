@@ -206,7 +206,7 @@ def kick_off():
     GAME_TEAM.goals = 0
     COMPUTER_TEAM.goals = 0
     print("Welcome to this European Super League Match")
-    print(f"between {GAME_TEAM.name} and {COMPUTER_TEAM.name}")
+    print(f"{GAME_TEAM.name} versus {COMPUTER_TEAM.name}")
     time.sleep(2)
     os.system("clear")
     print(game_graphics[4])
@@ -262,6 +262,14 @@ def call_event():
         if i == NO_EVENTS:
             print(f"FINAL SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
             print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+            print("\n")
+            if GAME_TEAM.goals > COMPUTER_TEAM.goals:
+                print(f"A brilliant victory for {GAME_TEAM.name}\n")
+            elif GAME_TEAM.goals == COMPUTER_TEAM.goals:
+                print(f"A close game between {GAME_TEAM.name} \
+                    and {COMPUTER_TEAM.name} ends in a draw\n")
+            else:
+                print(f"A disappointing loss for {GAME_TEAM.name}\n")
             pause()
             start_choice = validate_str("What do you want to do now? "
                                         " k = Kick-off again, "
@@ -277,7 +285,7 @@ def call_event():
                 sys.exit("You don't want to play again? That makes me sad :( ")
         else:
             print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
-            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}\n")
             pause()
         i += 1
         EVENT_NUM += 1
@@ -305,7 +313,7 @@ def attack_play():
         if OUTCOMES[0] == 1:
             SHOT_OUTCOME = shoot(0)
         else:
-            print("He skies it over the bar")
+            print("He skies it over the bar\n")
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to pass")
         print_delay("......")
@@ -313,7 +321,7 @@ def attack_play():
         if OUTCOMES[1] == 1:
             SHOT_OUTCOME = shoot(0)
         else:
-            print("The pass is intercepted and the attack breaks down")
+            print("The pass is intercepted and the attack breaks down\n")
     else:
         print(f"The {GAME_TEAM.name} player has decided to dribble")
         print_delay("......")
@@ -321,7 +329,7 @@ def attack_play():
         if OUTCOMES[2] == 1:
             SHOT_OUTCOME = shoot(0)
         else:
-            print("He loses the ball. Bad decision to dribble!")
+            print("He loses the ball. Bad decision to dribble!\n")
 
 
 def defend_play():
@@ -347,7 +355,7 @@ def defend_play():
         if OUTCOMES[0] == 0:
             SHOT_OUTCOME = shoot(1)
         else:
-            print("What a tackle! He clears the ball")
+            print("What a tackle! He clears the ball\n")
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to press the player")
         print_delay("......")
@@ -355,7 +363,7 @@ def defend_play():
         if OUTCOMES[1] == 0:
             SHOT_OUTCOME = shoot(1)
         else:
-            print("The pressure tells and the defender stops the attack")
+            print("The pressure tells and the defender stops the attack\n")
     else:
         print(f"The {GAME_TEAM.name} player has decided to foul him")
         print_delay("......")
@@ -363,7 +371,7 @@ def defend_play():
         if OUTCOMES[2] == 0:
             SHOT_OUTCOME = shoot(1)
         else:
-            print("The ref didn't see the foul and the attacker is raging!")
+            print("The ref didn't see the foul and the attacker is raging!\n")
 
 
 def shoot(attdef):
