@@ -104,7 +104,7 @@ def display_teams():
         },
         10,
     )
-    teams = [first_team, second_team, third_team, fourth_team, fifth_team, 
+    teams = [first_team, second_team, third_team, fourth_team, fifth_team,
              sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
     print(f"Team 1: {first_team.name}")
     print(f"Team 2: {second_team.name}")
@@ -147,7 +147,7 @@ def generate_stats(GAME_TEAM, COMPUTER_TEAM):
             {opp_team.name}: {opp_team.defence}
         Attack(Max 100):
             {current_team.name}: {current_team.attack}
-            {opp_team.name}: {opp_team.attack} 
+            {opp_team.name}: {opp_team.attack}
         Skill(Max 100):
             {current_team.name}: {current_team.skill}
             {opp_team.name}: {opp_team.skill}
@@ -285,7 +285,8 @@ def call_event():
                 sys.exit("You don't want to play again? That makes me sad :( ")
         else:
             print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
-            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}\n")
+            print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
+            print("\n")
             pause()
         i += 1
         EVENT_NUM += 1
@@ -427,8 +428,9 @@ def calc_targets(attdef):
     Calculate number of positive(1) and
     negative(0) TARGETS. Positives return a GOAL, negatives a miss
     based on previously generated stats and probabilities.
-    The bigger the gap between home attack and opp def stats the more chances to score
-    when attacking and vice versa for defending scenarios
+    The bigger the gap between home attack and opp def stats
+    the more chances to score when attacking and
+    vice versa for defending scenarios
     """
     global TARGETS
     i = attdef
