@@ -141,3 +141,4 @@ The project was deployed on Heroku using the following method:
 - all Text graphics generated at: https://patorjk.com/software/taag/#p=display&h=2&v=1&f=Slant&t=FOOTBALL%0A%20%20%20%20%20%20%20GAME
 - Goal grpahics found at https://asciiart.website/index.php?art=sports%20and%20activities/soccer and modified by me
 - Print delay feature found here: https://stackoverflow.com/questions/4627033/how-to-print-a-string-with-a-little-delay-between-the-chars
+- readme template from https://github.com/Christo107/Training_Quiz/blob/main/README.md#training-evaulation-quiz
