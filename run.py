@@ -461,7 +461,6 @@ def calc_targets(attdef):
         elif STATDIFFS[i] <= -16:
             usertargets = [1, 1, 1, 1, 1, 0]
     TARGETS = random.sample(usertargets, 6)
-    print(TARGETS)
     pause()
 
 
