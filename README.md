@@ -21,8 +21,7 @@ The live website on Heroku can be accessed at the following link: [View my Live 
     *  [Languages](#languages)
     *  [Frameworks, Libraries and Programs](#frameworks-libraries-and-programs)
 * [Testing](#testing)
-    * [Validator Testing](#validator-testing)
-    * [User Story Testing](#user-story-testing)
+    * [Validation Testing](#validation-testing)
     * [Bugs](#bugs)
 * [Deployment](#deployment)
 * [Credits](#credits)
@@ -78,6 +77,7 @@ The live website on Heroku can be accessed at the following link: [View my Live 
     -  There is one function for number input validation and one for string validation. They are called from within functions as required and returns the validated input.
 
 [Number Input Validation](./readmeimg/input_num_validation.png)
+
 [String Input Validation](./readmeimg/input_string_validation.png)
 
 - #### **ASCII Art**
@@ -123,7 +123,7 @@ A number of features have been added to improve the user experience while using 
 
 ## Testing
 
-### Validator Testing
+### Validation Testing
 - The code was run through the [Code Institute Python Linter](https://pep8ci.herokuapp.com/) and showed no errors.
 [CI Python Linter Result Image](./readmeimg/pep8test.png)
 - I used the user stories to perform manual testing on the quiz to see whether there were any blockers to the user goals identified above. The results are listed above in the [User Stories](#user-stories) section
