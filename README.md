@@ -71,17 +71,19 @@ The live website on Heroku can be accessed at the following link: [View my Live 
         - If no, it will display a message explaining that the chance is over.
     - The number of targets that will return a goal if use selects them are decided by the team stats generated at the start of game
 
-![No goal Chance](./readmeimg/no_goal_chance.png)
+![No Goal Chance](./readmeimg/no_goal_chance.png)
+![Goal Chance Graphic](./readmeimg/goal_chance.png)
 
 - #### **Input Validation**
-    -  
+    -  There is one function for number input validation and one for string validation. They are called from within functions as required and returns the validated input.
 
-![Targets and Outcomes]()
+[Number Input Validation](./readmeimg/input_num_validation.png)
+[String Input Validation](./readmeimg/input_string_validation.png)
 
 - #### **ASCII Art**
-    -  
+    -  To help improve the visual feel of the game, there is some use of ASCII art
 
-![ASCII Art]()
+![ASCII Art](./readmeimg/ascii_art_goal.png)
 
 ### Future Features
 - Improve the graphics with colour
