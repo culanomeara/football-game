@@ -503,19 +503,19 @@ def print_delay(displaytext):
         time.sleep(0.3)
 
 
-def validate_int(int1, int2, int3, int4, int5, int6):
+def validate_int(*ints):
     """
     Validates integer input and gives error message if invalid
     """
-    low = int1
-    if int3 == 0:
-        high = int2
-    elif int4 == 0:
-        high = int3
-    elif int6 == 0:
-        high = int5
+    low = ints[0]
+    if ints[2] == 0:
+        high = ints[1]
+    elif ints[3] == 0:
+        high = ints[2]
+    elif ints[5] == 0:
+        high = ints[4]
     else:
-        high = int6
+        high = ints[5]
     while True:
         try:
             user_choice = int(input("Please make your choice: "))
