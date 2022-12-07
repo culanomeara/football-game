@@ -4,7 +4,6 @@ import sys
 import os
 # https://github.com/joeyespo/py-getch
 from getch import pause
-
 from graphics import game_graphics
 from eventdescriptions import event_desc
 
@@ -266,7 +265,7 @@ def call_event():
             if GAME_TEAM.goals > COMPUTER_TEAM.goals:
                 print(f"A brilliant victory for {GAME_TEAM.name}\n")
             elif GAME_TEAM.goals == COMPUTER_TEAM.goals:
-                print(f"A close game between {GAME_TEAM.name} \
+                print(f"A close game between {GAME_TEAM.name}\
                     and {COMPUTER_TEAM.name} ends in a draw\n")
             else:
                 print(f"A disappointing loss for {GAME_TEAM.name}\n")
@@ -538,10 +537,11 @@ def validate_str(query, str1, str2, str3):
     valid3 = str3
     while True:
         answer = input(query).lower()
-        if answer == valid1 or valid2 or valid3:
-            return answer
+        if answer in (valid1, valid2, valid3):
+            break
         else:
             print(f"You have to choose {str1}, {str2} or {str3}")
+    return answer
 
 
 intro()

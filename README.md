@@ -1,5 +1,4 @@
 # Football Stars
-Readme from https://github.com/Christo107/Training_Quiz/blob/main/README.md
 
 Football Stars is a text-based game where everything is determined by the randomly generated statistics. You will never experience the same game twice.
 
@@ -31,14 +30,21 @@ The live website on Heroku can be accessed at the following link: [View my Live 
 ## Features
 
 ### Existing Features
+- #### **Introduction**
+    - Clear and simple outline of the game
+
+![Introduction screen image](./readmeimg/welcome_intro.png)
+
 - #### **Team Selection**
     - The game has 10 preset team names.
     - The user is presented with a list of 5 of those randomly chosen
+
+![Team Selection Image](./readmeimg/team_select.png)
+
     - The user selects the team.
     - Their choice of team is then removed from the team list and 1 of the reamining teams is chosen as the opposition.
 
-![Team Selection Image]()
-![Team chosen image]()
+![Team chosen image](./readmeimg/team_chosen.png)
 
 - #### **Team Statistics**
     - Once the teams are selected, their ratings(statistics) are generated.
@@ -46,24 +52,26 @@ The live website on Heroku can be accessed at the following link: [View my Live 
     - Based on the stats generated, the difference between home team attack and opposition team defence is stored as attdiff and vice versa called defdiff. Last stat is called skilldiff
     - These stats are effected by form also
     
-![Team Statistics]()
+![Team Statistics](./readmeimg/team_stats.png)
 
 - #### **Game events**
     - The number of game events are determined randomnly from 5-8
     - Based on number of events, the match times of these events are determined.
     - The type of event that occurs(attacking or defending) is then decided
 
-![Game event image]()
+![Game event image](./readmeimg/event_screen.png)
 
 - #### **Attack and Defend events**
-    - 
-
-![Attack and Defend events]()
+    - Depending on the type of event(attack or defend), the text and graphics used are different
+    - With the above image, you can see that it is labelled as ATTACK. The three choices offered are attack-specific.
 
 - #### **Targets and Outcomes**
-    -  
+    -  When a user makes a choice, the game checks against the randomly generated stats to see if the user choice will lead to a goal chance or not.
+        - If yes, then they are shown a goal graphic and get to choose where they want to shoot/dive
+        - If no, it will display a message explaining that the chance is over.
+    - The number of targets that will return a goal if use selects them are decided by the team stats generated at the start of game
 
-![Targets and Outcomes]()
+![No goal Chance](./readmeimg/no_goal_chance.png)
 
 - #### **Input Validation**
     -  
@@ -115,7 +123,7 @@ A number of features have been added to improve the user experience while using 
 
 ### Validator Testing
 - The code was run through the [Code Institute Python Linter](https://pep8ci.herokuapp.com/) and showed no errors.
-[CI Python Linter Result Image]()
+[CI Python Linter Result Image](./readmeimg/pep8test.png)
 - I used the user stories to perform manual testing on the quiz to see whether there were any blockers to the user goals identified above. The results are listed above in the [User Stories](#user-stories) section
 
 ## Bugs
