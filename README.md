@@ -18,11 +18,9 @@ The live website on Heroku can be accessed at the following link: [View my Live 
 * [User Experience](#user-experience)
     *  [User Stories](#user-stories)
 * [Design](#design)
-    *  [Process Flow](#process-flow)
-    *  [Accessibility](#accessibility)
-* [Technologies Used](#technologies-used)   
-    *  [Languages Used](#languages-used)
-    *  [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
+* [Technologies](#technologies)   
+    *  [Languages](#languages)
+    *  [Frameworks, Libraries and Programs](#frameworks-libraries-and-programs)
 * [Testing](#testing)
     * [Validator Testing](#validator-testing)
     * [User Story Testing](#user-story-testing)
@@ -99,15 +97,19 @@ A number of features have been added to improve the user experience while using 
 
 ## Design
 - The design of the game is simple and straightforward. Text-based game with defined number of choices offered to user at each stage. For each event, customised event descriptions are displayed. Based on those choices, it can lead to a goal chance and a goal graphic is displayed and the user selects where they want to target their shot. If it's a goal, then the score is increased.
+![Flowchart](./readmeimg/footballgame.drawio.png)
 
-### Languages used
+## Technologies
+
+### Languages
 - Python
 
-### Frameworks, Libraries and Programs used
+### Frameworks, Libraries and Programs
 - [GitHub](https://github.com)
 - [Gitpod](https://gitpod.io/workspaces)
 - [Heroku](https://www.heroku.com)
 - [Chrome Dev Tools](https://www.google.com/intl/en_ie/chrome/)
+- [Draw.io](https://app.diagrams.net/) for flowcharting
 
 ## Testing
 
