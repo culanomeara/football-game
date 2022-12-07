@@ -179,18 +179,7 @@ def match_start():
     Otherwise, we exit the program
     """
     os.system("clear")
-    start_choice = validate_str("Are you ready to kick off? "
-                                " y = Kick Off,"
-                                " n = restart game,"
-                                " x = Exit \n", "y", "n", "x")
-    if start_choice == 'y':
-        kick_off()
-    elif start_choice == 'n':
-        print("We're just going to restart the game so...")
-        os.system('clear')
-        intro()
-    else:
-        sys.exit("You don't want to kick off? That makes me sad :( ")
+    check_start()
 
 
 def kick_off():
@@ -270,18 +259,7 @@ def call_event():
             else:
                 print(f"A disappointing loss for {GAME_TEAM.name}\n")
             pause()
-            start_choice = validate_str("What do you want to do now? "
-                                        " k = Kick-off again, "
-                                        "r = Restart the game, "
-                                        " q = Quit \n", "k", "r", "q")
-            if start_choice == 'k':
-                os.system('clear')
-                kick_off()
-            elif start_choice == 'r':
-                os.system('clear')
-                intro()
-            else:
-                sys.exit("You don't want to play again? That makes me sad :( ")
+            check_start()
         else:
             print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
             print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
@@ -404,6 +382,25 @@ def shoot(attdef):
     pause()
     os.system("clear")
     return goal_yn
+
+
+def check_start():
+    """
+    Function to see what use wants to do next at various stages of game
+    Kick-off, restart or quit. Refactors code to reduce repetition
+    """
+    start_choice = validate_str("What do you want to do? "
+                                " k = Kick-off again, "
+                                "r = Restart the game, "
+                                " q = Quit \n", "k", "r", "q")
+    if start_choice == 'k':
+        os.system('clear')
+        kick_off()
+    elif start_choice == 'r':
+        os.system('clear')
+        intro()
+    else:
+        sys.exit("You don't want to play again? That makes me sad :( ")
 
 
 def show_targets(attack_defend):
