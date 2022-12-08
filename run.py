@@ -179,7 +179,7 @@ def match_start():
     Otherwise, we exit the program
     """
     os.system("clear")
-    check_start()
+    check_start(0)
 
 
 def kick_off():
@@ -259,7 +259,7 @@ def call_event():
             else:
                 print(f"A disappointing loss for {GAME_TEAM.name}\n")
             pause()
-            check_start()
+            check_start(1)
         else:
             print(f"MATCH SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
             print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
@@ -384,15 +384,21 @@ def shoot(attdef):
     return goal_yn
 
 
-def check_start():
+def check_start(status):
     """
     Function to see what use wants to do next at various stages of game
     Kick-off, restart or quit. Refactors code to reduce repetition
     """
-    start_choice = validate_str("What do you want to do? "
-                                " k = Kick-off again, "
-                                "r = Restart the game, "
-                                " q = Quit \n", "k", "r", "q")
+    if status == 0:
+        start_choice = validate_str("What do you want to do? "
+                                    " k = Kick-off, "
+                                    "r = Restart the game, "
+                                    " q = Quit \n", "k", "r", "q")
+    else:
+        start_choice = validate_str("What do you want to do now? "
+                                    " k = Kick-off again with same teams, "
+                                    "r = Restart the game(select new teams), "
+                                    " q = Quit \n", "k", "r", "q")
     if start_choice == 'k':
         os.system('clear')
         kick_off()
