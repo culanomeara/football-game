@@ -2,10 +2,13 @@ import random
 import time
 import sys
 import os
+import warnings
 # https://github.com/joeyespo/py-getch
 from getch import pause
 from graphics import game_graphics
 from eventdescriptions import event_desc
+
+warnings.simplefilter("ignore", category=PendingDeprecationWarning)
 
 GAME_TEAM = ""
 COMPUTER_TEAM = ""
