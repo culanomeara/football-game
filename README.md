@@ -134,6 +134,7 @@ A number of features have been added to improve the user experience while using 
 - Defend/Attack player choices would all lead to goal chances.
 - Hitting Enter would quit the app.
 - Opposition team goal total was increased even when shot missed
+- Check_start function was giving same message and needed custom messages trhu if statement
 
 ## Deployment
 The project was deployed on Heroku using the following method:
