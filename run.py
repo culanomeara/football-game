@@ -278,7 +278,7 @@ def attack_play():
     global SHOT_OUTCOME
     calc_outcomes(0)
     print("\nATTACK: ")
-    attack_desc = random.randrange(0, 4)
+    attack_desc = random.randrange(0, 7)
     print(f"{GAME_TEAM.name} {event_desc[attack_desc]}")
     print_delay("> > > > > > >")
     print("\nWhat action are you taking?")
@@ -292,6 +292,7 @@ def attack_play():
             SHOT_OUTCOME = shoot(0)
         else:
             print("He skies it over the bar\n")
+            SHOT_OUTCOME = 0
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to pass")
         print_delay("......")
@@ -300,6 +301,7 @@ def attack_play():
             SHOT_OUTCOME = shoot(0)
         else:
             print("The pass is intercepted and the attack breaks down\n")
+            SHOT_OUTCOME = 0
     else:
         print(f"The {GAME_TEAM.name} player has decided to dribble")
         print_delay("......")
@@ -308,6 +310,7 @@ def attack_play():
             SHOT_OUTCOME = shoot(0)
         else:
             print("He loses the ball. Bad decision to dribble!\n")
+            SHOT_OUTCOME = 0
 
 
 def defend_play():
@@ -334,6 +337,7 @@ def defend_play():
             SHOT_OUTCOME = shoot(1)
         else:
             print("What a tackle! He clears the ball\n")
+            SHOT_OUTCOME = 0
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to press the player")
         print_delay("......")
@@ -342,6 +346,7 @@ def defend_play():
             SHOT_OUTCOME = shoot(1)
         else:
             print("The pressure tells and the defender stops the attack\n")
+            SHOT_OUTCOME = 0
     else:
         print(f"The {GAME_TEAM.name} player has decided to foul him")
         print_delay("......")
@@ -350,6 +355,7 @@ def defend_play():
             SHOT_OUTCOME = shoot(1)
         else:
             print("The ref didn't see the foul and the attacker is raging!\n")
+            SHOT_OUTCOME = 0
 
 
 def shoot(attdef):
