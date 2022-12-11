@@ -219,18 +219,21 @@ def call_event():
         print(f"Match Time: {EVENT_TIMES[EVENT_NUM-1]} mins")
         if eventtype == 0:
             attack_play()
+            pause()
+            os.system("clear")
             if SHOT_OUTCOME == 1:
                 GAME_TEAM.goals += 1
             else:
                 GAME_TEAM.goals += 0
         else:
             defend_play()
+            pause()
+            os.system("clear")
             if SHOT_OUTCOME == 1:
                 COMPUTER_TEAM.goals += 1
             else:
                 COMPUTER_TEAM.goals += 0
         if i == NO_EVENTS:
-            os.system("clear")
             print(f"FINAL SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
             print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
             print("\n")
@@ -368,8 +371,6 @@ def shoot(attdef):
         else:
             goal_yn = 1
             print(game_graphics[1])
-    pause()
-    os.system("clear")
     return goal_yn
 
 
