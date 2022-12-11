@@ -428,28 +428,28 @@ def calc_targets(attdef):
     if i == 0:
         # home team att stats versus opp team def stats
         # 1 = goal, 0 = miss
-        if 16 <= STATDIFFS[i]:
+        if 25 <= STATDIFFS[i]:
             usertargets = [1, 1, 1, 1, 1, 0]
-        elif 10 <= STATDIFFS[i] <= 15:
+        elif 10 <= STATDIFFS[i] <= 24:
             usertargets = [1, 1, 1, 1, 0, 0]
         elif -9 <= STATDIFFS[i] <= 9:
             usertargets = [1, 1, 1, 0, 0, 0]
-        elif -15 <= STATDIFFS[i] <= -10:
+        elif -24 <= STATDIFFS[i] <= -10:
             usertargets = [1, 1, 0, 0, 0, 0]
-        elif STATDIFFS[i] <= -16:
+        elif STATDIFFS[i] <= -25:
             usertargets = [1, 0, 0, 0, 0, 0]
     else:
         # opp team att stats versus home team def stats
         # 1 = save, 0 = goal
-        if 16 <= STATDIFFS[i]:
+        if 25 <= STATDIFFS[i]:
             usertargets = [1, 0, 0, 0, 0, 0]
-        elif 10 <= STATDIFFS[i] <= 15:
+        elif 10 <= STATDIFFS[i] <= 24:
             usertargets = [1, 1, 0, 0, 0, 0]
         elif -9 <= STATDIFFS[i] <= 9:
             usertargets = [1, 1, 1, 0, 0, 0]
-        elif -15 <= STATDIFFS[i] <= -10:
+        elif -24 <= STATDIFFS[i] <= -10:
             usertargets = [1, 1, 1, 1, 0, 0]
-        elif STATDIFFS[i] <= -16:
+        elif STATDIFFS[i] <= -25:
             usertargets = [1, 1, 1, 1, 1, 0]
     random.shuffle(usertargets)
     TARGETS = usertargets
@@ -467,19 +467,19 @@ def calc_outcomes(attdef):
     # skill ratings determine how many outcomes lead to goal chance
     if attdef == 0:
         # 1 = goal chance 0 = not
-        if 10 <= STATDIFFS[2]:
+        if 16 <= STATDIFFS[2]:
             useroutcomes = [1, 1, 1]
-        elif -9 <= STATDIFFS[2] <= 9:
+        elif -15 <= STATDIFFS[2] <= 15:
             useroutcomes = [1, 1, 0]
-        elif STATDIFFS[2] <= -10:
+        elif STATDIFFS[2] <= -16:
             useroutcomes = [1, 0, 0]
     else:
         # 1 = not chance 0 = goal chance
-        if 10 <= STATDIFFS[2]:
+        if 16 <= STATDIFFS[2]:
             useroutcomes = [1, 0, 0]
-        elif -9 <= STATDIFFS[2] <= 9:
+        elif -15 <= STATDIFFS[2] <= 15:
             useroutcomes = [1, 1, 0]
-        elif STATDIFFS[2] <= -10:
+        elif STATDIFFS[2] <= -16:
             useroutcomes = [1, 1, 1]
     random.shuffle(useroutcomes)
     OUTCOMES = useroutcomes
