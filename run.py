@@ -454,7 +454,6 @@ def calc_targets(attdef):
             usertargets = [1, 1, 1, 1, 1, 0]
     random.shuffle(usertargets)
     TARGETS = usertargets
-    pause()
 
 
 def calc_outcomes(attdef):
