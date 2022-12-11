@@ -135,11 +135,12 @@ A number of features have been added to improve the user experience while using 
 - Hitting Enter would quit the app.
 - Opposition team goal total was increased even when shot missed
 - Check_start function was giving same message and needed custom messages trhu if statement
+- random.sample gave a deprecation warning when ran in heroku so i replaced it with random.sample and random.choices where applicable
 
 ## Deployment
 The project was deployed on Heroku using the following method:
 1. Add dependencies in GitPod to requirements.txt file with command "pip3 freeze > requirements.txt"
-2. Commit and push to GitHub as usual
+2. Commit and push to GitHub
 3. Go to the Heroku Dashboard
 4. Click "Create new app"
 5. Name app and select location
