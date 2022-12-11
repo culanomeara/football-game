@@ -197,7 +197,7 @@ def events():
     global NO_EVENTS
     global EVENT_TYPES
     NO_EVENTS = random.randrange(5, 8)
-    EVENT_TIMES = sorted(random.sample(range(1, 90), NO_EVENTS))
+    EVENT_TIMES = sorted(random.choices(range(1, 90), k=NO_EVENTS))
     # attacking event code = 0 defend attack code = 1
     event_choices = (0, 1)
     EVENT_TYPES = random.choices(event_choices, k=NO_EVENTS)
@@ -230,14 +230,15 @@ def call_event():
             else:
                 COMPUTER_TEAM.goals += 0
         if i == NO_EVENTS:
+            os.system("clear")
             print(f"FINAL SCORE: {GAME_TEAM.name} : {GAME_TEAM.goals}")
             print(f"             {COMPUTER_TEAM.name} : {COMPUTER_TEAM.goals}")
             print("\n")
             if GAME_TEAM.goals > COMPUTER_TEAM.goals:
                 print(f"A brilliant victory for {GAME_TEAM.name}\n")
             elif GAME_TEAM.goals == COMPUTER_TEAM.goals:
-                print(f"A close game between {GAME_TEAM.name}\
-                    and {COMPUTER_TEAM.name} ends in a draw\n")
+                print(f"A close game between {GAME_TEAM.name}\n")
+                print(f" and {COMPUTER_TEAM.name} ends in a draw\n")
             else:
                 print(f"A disappointing loss for {GAME_TEAM.name}\n")
             pause()
@@ -262,13 +263,13 @@ def attack_play():
     print("\nATTACK: ")
     attack_desc = random.randrange(0, 7)
     print(f"{GAME_TEAM.name} {event_desc[attack_desc]}")
-    print_delay("> > > > > > >")
+    print_delay("> > > > >")
     print("\nWhat action are you taking?")
     print("1: Shoot, 2: Pass, 3: Dribble\n")
     user_choice = validate_int(1, 2, 3, 0, 0, 0)
     if user_choice == 1:
         print(f"The {GAME_TEAM.name} player has decided to shoot")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[0] == 1:
             SHOT_OUTCOME = shoot(0)
@@ -277,7 +278,7 @@ def attack_play():
             SHOT_OUTCOME = 0
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to pass")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[1] == 1:
             SHOT_OUTCOME = shoot(0)
@@ -286,7 +287,7 @@ def attack_play():
             SHOT_OUTCOME = 0
     else:
         print(f"The {GAME_TEAM.name} player has decided to dribble")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[2] == 1:
             SHOT_OUTCOME = shoot(0)
@@ -307,13 +308,13 @@ def defend_play():
     print("\nDEFEND: ")
     def_desc = random.randrange(0, 7)
     print(f"{COMPUTER_TEAM.name} {event_desc[def_desc]}")
-    print_delay("< < < < < < <")
+    print_delay("< < < < <")
     print("\nWhat action are you taking?")
     print("1: Tackle, 2: Press, 3: Foul\n")
     user_choice = validate_int(1, 2, 3, 0, 0, 0)
     if user_choice == 1:
         print(f"The {GAME_TEAM.name} player has decided to tackle")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[0] == 0:
             SHOT_OUTCOME = shoot(1)
@@ -322,7 +323,7 @@ def defend_play():
             SHOT_OUTCOME = 0
     elif user_choice == 2:
         print(f"The {GAME_TEAM.name} player has decided to press the player")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[1] == 0:
             SHOT_OUTCOME = shoot(1)
@@ -331,7 +332,7 @@ def defend_play():
             SHOT_OUTCOME = 0
     else:
         print(f"The {GAME_TEAM.name} player has decided to foul him")
-        print_delay("......")
+        print_delay(".....")
         print("\n")
         if OUTCOMES[2] == 0:
             SHOT_OUTCOME = shoot(1)
@@ -450,7 +451,8 @@ def calc_targets(attdef):
             usertargets = [1, 1, 1, 1, 0, 0]
         elif STATDIFFS[i] <= -16:
             usertargets = [1, 1, 1, 1, 1, 0]
-    TARGETS = random.sample(usertargets, 6)
+    random.shuffle(usertargets)
+    TARGETS = usertargets
     pause()
 
 
@@ -479,7 +481,8 @@ def calc_outcomes(attdef):
             useroutcomes = [1, 1, 0]
         elif STATDIFFS[2] <= -10:
             useroutcomes = [1, 1, 1]
-    OUTCOMES = random.sample(useroutcomes, 3)
+    random.shuffle(useroutcomes)
+    OUTCOMES = useroutcomes
 
 
 def print_delay(displaytext):
