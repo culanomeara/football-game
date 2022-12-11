@@ -80,34 +80,13 @@ def display_teams():
     Display 5 random teams for user to choose from
     """
     print("\nSelect one of the following 5 teams \n")
-    (
-        first_team,
-        second_team,
-        third_team,
-        fourth_team,
-        fifth_team,
-        sixth_team,
-        seventh_team,
-        eight_team,
-        ninth_team,
-        tenth_team
-    ) = random.sample(
-        {
-            t1,
-            t2,
-            t3,
-            t4,
-            t5,
-            t6,
-            t7,
-            t8,
-            t9,
-            t10,
-        },
-        10,
-    )
-    teams = [first_team, second_team, third_team, fourth_team, fifth_team,
-             sixth_team, seventh_team, eight_team, ninth_team, tenth_team]
+    teams = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10]
+    random.shuffle(teams)
+    first_team = teams[0]
+    second_team = teams[1]
+    third_team = teams[2]
+    fourth_team = teams[3]
+    fifth_team = teams[4]
     print(f"Team 1: {first_team.name}")
     print(f"Team 2: {second_team.name}")
     print(f"Team 3: {third_team.name}")
